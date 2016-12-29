@@ -2,7 +2,7 @@
 
 namespace Bluora\LaravelDatasets\Migrations;
 
-use Bluora\LaravelDatasets\MigrationsTrait;
+use Bluora\LaravelDatasets\Traits\MigrationsTrait;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
