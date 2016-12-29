@@ -10,9 +10,8 @@ use League\Flysystem\Adapter\Ftp as Adapter;
  */
 
 return [
-    'url'     => false,
     'table'   => 'australian_bsb',
-    'source_path' => function() {
+    'path' => function() {
 
         // Connect to the host.
         $ftp = new Filesystem(new Adapter([

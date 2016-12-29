@@ -7,7 +7,7 @@
  */
 
 return [
-    'url'     => 'https://github.com/datasets/population/raw/master/data/population.csv',
     'table'   => 'country_population',
+    'path'    => 'https://github.com/datasets/population/raw/master/data/population.csv',
     'mapping' => [],
 ];

@@ -7,8 +7,8 @@
  */
 
 return [
-    'url'     => 'https://github.com/datasets/country-codes/raw/master/data/country-codes.csv',
     'table'   => 'country_codes',
+    'path'    => 'https://github.com/datasets/country-codes/raw/master/data/country-codes.csv',
     'mapping' => [
         'name' => 'name',
         'official_name_en'                 => 'official_name_en',
@@ -38,9 +38,11 @@ return [
         'geonameid'                        => 'geonameid',
         'EDGAR'                            => 'edgar',
     ],
-    'name'    => function(&$value, $data) {
-        if (empty($value)) {
-            $value = $data['official_name_en'];
-        }
-    },
+    'modify' => [
+        'name' => function(&$value, $data) {
+            if (empty($value)) {
+                $value = $data['official_name_en'];
+            }
+        },
+    ],
 ];

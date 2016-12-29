@@ -37,5 +37,7 @@ class SyncDataCommand extends Command
         $config = include_once $config_file;
 
         print_r($config);
+
+        
     }
 }

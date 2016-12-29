@@ -7,8 +7,8 @@
  */
 
 return [
-    'url'     => 'https://github.com/datasets/language-codes/raw/master/data/language-codes-full.csv',
     'table'   => 'language_codes',
+    'path'    => 'https://github.com/datasets/language-codes/raw/master/data/language-codes-full.csv',
     'mapping' => [
         'name'                           => 'name',
         'official_name_en'               => 'official_name_en',
