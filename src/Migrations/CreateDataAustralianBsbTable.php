@@ -11,6 +11,8 @@ class CreateDataAustralianBsbTable extends Migration
 {
     use MigrationsTrait;
 
+    protected $table_name = 'data_australian_bsb';
+
     /**
      * Run the migrations.
      *
@@ -18,8 +20,9 @@ class CreateDataAustralianBsbTable extends Migration
      */
     public function up()
     {
-        Schema::create('data_australian_bsb', function (Blueprint $table) {
-            self::standardTableStart($table);
+        Schema::create($this->table_name, function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('uuid', 16);
             $table->string('bsb', 7)->default('');
             $table->string('bank', 3)->default('');
             $table->string('branch', 255)->default('');
@@ -28,8 +31,13 @@ class CreateDataAustralianBsbTable extends Migration
             $table->string('state', 3)->default('');
             $table->smallInteger('postcode');
             $table->string('payment_types', 255)->default('');
-            self::standardTableEnd($table, 'data_australian_bsb');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->timestamp('archived_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
+
+        self::updateUuid($this->table_name, 'uuid');
     }
 
     /**
@@ -39,6 +47,7 @@ class CreateDataAustralianBsbTable extends Migration
      */
     public function down()
     {
-        self::standardTableDrop('data_australian_bsb');
+        self::dropUuidTrigger($this->table_name);
+        self::standardTableDrop($this->table_name);
     }
 }
