@@ -11,7 +11,7 @@ use League\Flysystem\Adapter\Ftp as Adapter;
 
 return [
     'table'   => 'australian_bsb',
-    'path' => function() {
+    'path' => function($command) {
 
         // Connect to the host.
         $ftp = new Filesystem(new Adapter([
@@ -26,16 +26,25 @@ return [
             return 1;
         }
 
-        // Filter the folder's files to those containing 'BSBDirectory'
-        $latest_file_name = sprintf('BSBDirectory%s-', date('My', time()));
+        $file_found = false;
 
-        $files_filtered = array_filter($files, function($value) use ($latest_file_name) {
-            return stripos($value['filename'], $latest_file_name) !== false && $value['extension'] == 'csv';
-        });
+        $time = time();
 
-        if (count($files_filtered) == 0) {
+        while (!$file_found) {
+            // Filter the folder's files to those containing 'BSBDirectory'
+            $latest_file_name = sprintf('BSBDirectory%s-', date('My', $time));
+            $command->line('Checking '.date('F Y', $time));
 
-            return 1;
+            $files_filtered = array_filter($files, function($value) use ($latest_file_name) {
+                return stripos($value['filename'], $latest_file_name) !== false && $value['extension'] == 'csv';
+            });
+
+            if (count($files_filtered) > 0) {
+                $file_found = true;
+                break;
+            }
+
+            $time = (new DateTime())->setTimestamp($time)->modify('-1 month')->getTimestamp();
         }
 
         // Reduce to the path to this file.

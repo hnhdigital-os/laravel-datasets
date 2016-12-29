@@ -15,8 +15,8 @@ class ServiceProvider extends BaseServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                MigrateCommand::class,
-                SetupCommand::class,
+                //MigrateCommand::class,
+                //SetupCommand::class,
                 SyncDataCommand::class,
             ]);
         }

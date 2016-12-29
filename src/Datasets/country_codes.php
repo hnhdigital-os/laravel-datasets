@@ -10,7 +10,7 @@ return [
     'table'   => 'country_codes',
     'path'    => 'https://github.com/datasets/country-codes/raw/master/data/country-codes.csv',
     'mapping' => [
-        'name' => 'name',
+        'name'                             => 'name',
         'official_name_en'                 => 'official_name_en',
         'official_name_fr'                 => 'official_name_fr',
         'ISO3166-1-Alpha-2'                => 'iso3166_1_alpha_2',
@@ -39,9 +39,9 @@ return [
         'EDGAR'                            => 'edgar',
     ],
     'modify' => [
-        'name' => function(&$value, $data) {
+        'name' => function(&$value, $data_row) {
             if (empty($value)) {
-                $value = $data['official_name_en'];
+                $value = array_get($data_row, 'official_name_en', '');
             }
         },
     ],
