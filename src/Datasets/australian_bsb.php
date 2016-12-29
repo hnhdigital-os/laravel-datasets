@@ -33,7 +33,6 @@ return [
         while (!$file_found) {
             // Filter the folder's files to those containing 'BSBDirectory'
             $latest_file_name = sprintf('BSBDirectory%s-', date('My', $time));
-            $command->line('Checking '.date('F Y', $time));
 
             $files_filtered = array_filter($files, function($value) use ($latest_file_name) {
                 return stripos($value['filename'], $latest_file_name) !== false && $value['extension'] == 'csv';
@@ -41,6 +40,8 @@ return [
 
             if (count($files_filtered) > 0) {
                 $file_found = true;
+                $command->line('Using data from '.date('F Y', $time).'.');
+                $this->line('');
                 break;
             }
 
@@ -54,9 +55,12 @@ return [
         sort($files_filtered);
         $latest_file = array_pop($files_filtered);
 
+        $this->line("Path successfully generated.");
+
         // Return the path so that we download it.
         return sprintf('ftp://apca.com.au/%s', $latest_file);
     },
+    'no_header' => true,
     'mapping' => [
         0 => 'bsb',
         1 => 'bank',
@@ -66,5 +70,8 @@ return [
         5 => 'state',
         6 => 'postcode',
         7 => 'payment_types',
+    ],
+    'import_keys' => [
+        'bsb'
     ]
 ];
