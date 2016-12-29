@@ -1,7 +1,8 @@
 <?php
 
-namespace Bluora\LaravelDatasets;
+namespace Bluora\LaravelDatasets\Commands;
 
+use Bluora\LaravelDatasets\Models\ImportModel;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
@@ -36,12 +37,31 @@ class SyncDataCommand extends Command
      */
     public function handle()
     {
+
+        $this->line('');
+        $this->line("       _                          _   ___       _                _      ");
+        $this->line("      | |   __ _ _ _ __ ___ _____| | |   \ __ _| |_ __ _ ___ ___| |_ ___");
+        $this->line("      | |__/ _` | '_/ _` \ V / -_) | | |) / _` |  _/ _` (_-</ -_)  _(_-<");
+        $this->line("      |____\__,_|_| \__,_|\_/\___|_| |___/\__,_|\__\__,_/__/\___|\__/__/");
+        $this->line('');
+        $this->line("                                                          By H&H|Digital");
+        $this->line('');
+        $this->line('');
+        $this->line('');
+        $this->line("Processing '".$this->argument('dataset')."'.");
+        $this->line('');
+
         $this->loadConfig();
-        $this->checkConfig();
 
-        $result = $this->readData($this->downloadPath($this->getPath()));
+        $this->info('Configuration passed.');
+        $this->line('');
 
-        print_r($result);
+        $this->importData($this->readData($this->downloadPath($this->getPath())));
+
+
+        $this->info('Completed import.');
+        $this->line('');
+        $this->line('');
     }
 
     /**
@@ -51,16 +71,18 @@ class SyncDataCommand extends Command
      */
     private function loadConfig()
     {
-        $config_file = __DIR__.'/Datasets/'.$this->argument('dataset').'.php';
+        $config_file = __DIR__.'/../Datasets/'.$this->argument('dataset').'.php';
 
         // Supplied dataset config file does not exist.
         if (!file_exists($config_file)) {
             $this->error(sprintf('\'%s\' does not exist.', $this->argument('dataset')));
+            $this->line('');
+            $this->line('');
 
             exit(1);
         }
 
-        $this->config = include_once $config_file;
+        $this->checkConfig(include_once $config_file);
     }
 
     /**
@@ -68,14 +90,21 @@ class SyncDataCommand extends Command
      *
      * @return void
      */
-    private function checkConfig()
+    private function checkConfig($config)
     {
-        //  Certain keys are required for the config to be valid.
-        if (!array_has($this->config, 'path') || !array_has($this->config, 'table') || !array_has($this->config, 'mapping')) {
-            $this->error('Missing a required key - path, table, or mapping.');
+        $required_fields = ['table', 'path', 'mapping', 'import_keys'];
 
-            exit(1);
+        foreach ($required_fields as $key) {
+             if (!array_has($config, $key)) {
+                $this->error(sprintf('Missing \'%s\' from the dataset configuration file.', $key));
+                $this->line('');
+                $this->line('');
+
+                exit(1);
+            }
         }
+
+        $this->config = $config;
     }
 
     /**
@@ -86,14 +115,19 @@ class SyncDataCommand extends Command
     private function getPath()
     {
         if (($path = $this->config['path']) instanceof \Closure) {
+            $this->line('Generating dynamic download path.');
+            $this->line('');
             if (is_numeric($path = $path($this))) {
 
                 exit($path);
             }
+            $this->line('');
         }
 
         if (!is_string($path)) {
             $this->error('Path has not been provided as a string.');
+            $this->line('');
+            $this->line('');
 
             exit(1);
         }
@@ -110,7 +144,8 @@ class SyncDataCommand extends Command
      */
     private function downloadPath($path)
     {
-        $this->line(sprintf('Downloading \'%s\'...', $path));
+        $this->info(sprintf('Downloading \'%s\'...', $path));
+        $this->line('');
 
         // Get the file from FTP path
         if (stripos($path, 'ftp://') !== false) {
@@ -127,7 +162,9 @@ class SyncDataCommand extends Command
             return $res->getBody();
         }
 
-        $this->error('Failed to download');
+        $this->error('Failed to download.');
+        $this->line('');
+        $this->line('');
 
         exit(1);
     }
@@ -141,8 +178,14 @@ class SyncDataCommand extends Command
      */
     private function readData($data)
     {
-        $reader = Reader::createFromString($data)
-            ->fetchAssoc(0);
+        $this->line('Processing...');
+        $this->line('');
+
+        $reader = Reader::createFromString($data);
+
+        if (!array_has($this->config, 'no_header', false)) {
+            $reader = $reader->fetchAssoc(0);
+        }
 
         // Apply any filters.
         if (array_has($this->config, 'filter')) {
@@ -150,6 +193,7 @@ class SyncDataCommand extends Command
         }
 
         $result = [];
+        $this->progress_bar = $this->output->createProgressBar(1);
 
         foreach ($reader as $index => $row) {
             $new_row = [];
@@ -173,8 +217,62 @@ class SyncDataCommand extends Command
             if (count($new_row)) {
                 $result[] = $new_row;
             }
+            $this->progress_bar->advance();
         }
 
+        $this->line("     ");
+        $this->line("     ");
+
         return $result;
+    }
+
+    /**
+     * Import data.
+     *
+     * @param  array $data
+     *
+     * @return void
+     */
+    private function importData($data)
+    {
+        $this->line('Importing...');
+        $this->line('');
+
+        $this->progress_bar = $this->output->createProgressBar(count($data));
+
+        foreach ($data as $row) {            
+
+            $model_lookup = new ImportModel();
+            $model_lookup->setTable(sprintf('data_%s', array_get($this->config, 'table')));
+
+            foreach (array_get($this->config, 'import_keys', []) as $key) {
+                $model_lookup = $model_lookup->where($key, array_get($row, $key, null));
+            }
+
+            $model = $model_lookup->first();
+            $new_model = false;
+
+            if (is_null($model)) {
+                $model = new ImportModel();
+                $new_model = true;
+            }
+
+            $model->setTable(sprintf('data_%s', array_get($this->config, 'table')));
+
+            $count = 0;
+
+            foreach ($row as $key => $value) {
+                if ($new_model || $model->$key !== $value) {
+                    $model->$key = $value;
+                    $count++;
+                }
+            }
+
+            $model->save();
+            $this->progress_bar->advance();
+        }
+
+        $this->line("     ");
+        $this->line("     ");
     }
 }
