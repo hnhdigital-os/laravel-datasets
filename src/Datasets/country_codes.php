@@ -45,4 +45,7 @@ return [
             }
         },
     ],
+    'import_keys' => [
+        'name'
+    ]
 ];

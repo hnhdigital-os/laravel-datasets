@@ -14,7 +14,7 @@ class SyncDataCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'datasets:sync {dataset}';
+    protected $signature = 'datasets:sync {dataset} {--source-folder=}';
 
     /**
      * The console command description.
@@ -60,7 +60,6 @@ class SyncDataCommand extends Command
 
 
         $this->info('Completed import.');
-        $this->line('');
         $this->line('');
     }
 

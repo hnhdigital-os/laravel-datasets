@@ -1,10 +1,20 @@
 <?php
 
-namespace Bluora\LaravelDatasets;
+namespace Bluora\LaravelDatasets\Traits;
+
+use DB;
 
 trait MigrationsTrait
 {
-    public function updateUuid($table, $column)
+    /**
+     * Convert the column to binary(16) and create trigger.
+     *
+     * @param  string $table
+     * @param  string $column
+     *
+     * @return void  
+     */
+    public static function updateUuid($table, $column)
     {
         DB::unprepared('ALTER TABLE '.$table.' CHANGE '.$column.' '.$column.' BINARY(16) NULL DEFAULT NULL');
         DB::unprepared(
@@ -13,7 +23,14 @@ trait MigrationsTrait
         );
     }
 
-    public function dropUuidTrigger($table)
+    /**
+     * Drop the trigger associated with this table.
+     *
+     * @param  string $table
+     *
+     * @return void
+     */
+    public static function dropUuidTrigger($table)
     {
         DB::unprepared('DROP TRIGGER `'.$table.'_BEFORE_INSERT`');
     }
