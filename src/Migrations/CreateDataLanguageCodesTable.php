@@ -25,10 +25,10 @@ class CreateDataLanguageCodesTable extends Migration
             $table->bigIncrements('id');
             $table->string('uuid', 16);
             $table->string('iso3166_1_alpha_2', 2)->default('');
-            $table->string('iso3166_1_alpha_3', 3)->default('');
-            $table->string('iso3166_1_alpha_3', 3)->default('');
-            $table->string('english', 25)->default('');
-            $table->string('french', 25)->default('');
+            $table->string('iso3166_1_alpha_3', 7)->default('');
+            $table->string('iso3166_1_alpha_3t', 7)->default('');
+            $table->string('english', 255)->default('');
+            $table->string('french', 255)->default('');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->timestamp('archived_at')->nullable();
