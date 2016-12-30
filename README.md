@@ -12,7 +12,7 @@ This package has been developed by H&H|Digital, an Australian botique developer.
 
 Via composer:
 
-`$ composer require bluora/laravel-datasets dev-master`
+`$ composer require bluora/laravel-datasets ~1.0`
 
 ### Laravel configuration
 
