@@ -239,6 +239,11 @@ class SyncCommand extends Command
             $this->progress_bar->advance();
         }
 
+        // Apply any filters.
+        if (array_has($this->config, 'change_read_data')) {
+            $result = $this->config['change_read_data']($result);
+        }
+
         $this->line('     ');
         $this->line('     ');
 
