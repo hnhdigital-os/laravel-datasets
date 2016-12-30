@@ -53,5 +53,4 @@ class DataAustralianBsb extends EloquentModel
      * @var array
      */
     protected $hidden = [];
-
 }

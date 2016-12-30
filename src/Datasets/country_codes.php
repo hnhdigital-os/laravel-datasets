@@ -58,7 +58,7 @@ return [
             if (empty($value)) {
                 $value = 0;
             }
-        }
+        },
     ],
     'import_keys' => [
         'name',
