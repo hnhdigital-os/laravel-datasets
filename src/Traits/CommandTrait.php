@@ -8,6 +8,16 @@ use League\Flysystem\Filesystem;
 
 trait CommandTrait
 {
+    /**
+     * Display the splash.
+     *
+     * @param  string  $text
+     * @param  boolean $hide_splash
+     * 
+     * @return void
+     * 
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
     protected function splash($text, $hide_splash = false)
     {
         if (!$hide_splash) {
@@ -25,6 +35,16 @@ trait CommandTrait
         }
     }
 
+    /**
+     * Get list of dataset's paths, or a specific dataset's path.
+     *
+     * @param  boolean $dataset
+     *
+     * @return array|string
+     * 
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.ExitExpression)
+     */
     protected function getDatasets($dataset = false)
     {
         $source_packages = config('datasets.source', []);
@@ -107,9 +127,13 @@ trait CommandTrait
     /**
      * Check if the table exists.
      *
+     * @param string  $dataset
+     * @param boolean $no_exit
+     *
      * @return void
      *
      * @SuppressWarnings(PHPMD.ExitExpression)
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     protected function checkTableExists($dataset, $no_exit = false)
     {
