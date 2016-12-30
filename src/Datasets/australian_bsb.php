@@ -21,7 +21,8 @@ return [
         // Failed to connect.
         try {
             $files = $ftp->listContents();
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
+            $this->error($exception->getMessage());
 
             return 1;
         }

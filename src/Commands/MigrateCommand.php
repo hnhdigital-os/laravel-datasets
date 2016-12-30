@@ -6,7 +6,8 @@ use Bluora\LaravelDatasets\Traits\CommandTrait;
 use DB;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
-use League\Csv\Reader;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Adapter\Local as Adapter;
 
 class MigrateCommand extends Command
 {
@@ -64,7 +65,9 @@ class MigrateCommand extends Command
             exit(1);
         }
 
-        $migration_class = 'Bluora\\LaravelDatasets\\Migrations\\CreateData'.studly_case($this->argument('dataset')).'Table';
+        $migration_namespace = 'Bluora\\LaravelDatasets\\Migrations';
+        $migration_class_name = sprintf('CreateData%sTable', studly_case($this->argument('dataset')));
+        $migration_class = sprintf('%s\\%s', $migration_namespace, $migration_class_name);
 
         // Supplied dataset config file does not exist.
         if (!class_exists($migration_class)) {
@@ -78,8 +81,57 @@ class MigrateCommand extends Command
         $this->info('Migrating...');
         $this->line('');
 
+        // Migrate the database.
         $migration = new $migration_class();
         $migration->up();
 
+        $next_interation = $this->getNextInteration();
+
+        // Create an extension of this migration script in the database/migrations folder.
+        $migration_alias_file_name = sprintf('%s_%s_create_%s_table', date('Y_m_d'), str_pad($next_interation, 6, '0', STR_PAD_LEFT), $this->argument('dataset'));
+        $migration_alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $migration_alias_file_name);
+        $migration_alias_class = sprintf('Create%sTable', studly_case($this->argument('dataset')));
+
+        $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\n}\n", $migration_class, $migration_alias_class, $migration_class_name);
+
+        // Add the migration to the tracking table.
+        file_put_contents($migration_alias_file, $contents);
+
+        DB::unprepared(sprintf("INSERT INTO migrations SET migration='%s',batch=(SELECT max(batch)+1 FROM (SELECT batch FROM migrations) AS source_batch)", $migration_alias_file_name));
+    }
+
+    /**
+     * Get the next interation.
+     *
+     * @return integer
+     */
+    private function getNextInteration()
+    {
+        // Get the next interator.
+        $migrations = new Filesystem(new Adapter(base_path('database/migrations')));
+
+        try {
+            $files = $migrations->listContents();
+        } catch (\Exception $exception) {
+            $this->error($exception->getMessage());
+
+            exit(1);
+        }
+
+        $files_filtered = array_filter($files, function($value) {
+            return stripos($value['filename'], date('Y_m_d')) !== false;
+        });
+
+        if (count($files_filtered) == 0) {
+            return 1;
+        }
+
+        $files_filtered = array_column($files_filtered, 'path');
+
+        sort($files_filtered);
+        $latest_file = array_pop($files_filtered);
+        $latest_details = explode('_', $latest_file);
+
+        return (int)[3]+1;
     }
 }
