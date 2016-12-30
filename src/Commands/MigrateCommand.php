@@ -55,6 +55,7 @@ class MigrateCommand extends Command
      * @return void
      *
      * @SupressWarnings(PHPMD.ExitExpression)
+     * @SupressWarnings(PHPMD.LongVariable)
      */
     private function runMigration()
     {
