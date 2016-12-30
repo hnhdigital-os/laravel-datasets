@@ -136,6 +136,6 @@ class MigrateCommand extends Command
         $latest_file = array_pop($files_filtered);
         $latest_details = explode('_', $latest_file);
 
-        return (int)[3]+1;
+        return (int)$latest_details[3]+1;
     }
 }
