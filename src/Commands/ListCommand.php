@@ -43,7 +43,7 @@ class ListCommand extends Command
      */
     public function handle()
     {
-        $this->splash('Listing available datasets');
+        $this->splash('Listed below are the datasets available to this package:');
 
         // Get folder contents of datasets
         $datasets = new Filesystem(new Adapter(__DIR__.'/../Datasets'));
@@ -67,7 +67,7 @@ class ListCommand extends Command
         }
 
         $this->line('');
-        $this->line("You can run 'php artisan datasets:migrate [dataset]' to setup the required database table.");
+        $this->line("You can run 'php artisan datasets:install [dataset]' to install the specified dataset.");
         $this->line('');
     }
 }

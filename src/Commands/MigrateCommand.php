@@ -17,7 +17,7 @@ class MigrateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'datasets:migrate {dataset}';
+    protected $signature = 'datasets:migrate {dataset} {--no-splash=0}';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class MigrateCommand extends Command
      */
     public function handle()
     {
-        $this->splash(sprintf("Migrating database for '%s'", $this->argument('dataset')));
+        $this->splash(sprintf("Migrating database for '%s'.", $this->argument('dataset')), $this->option('no-splash'));
 
         $this->runMigration();
 

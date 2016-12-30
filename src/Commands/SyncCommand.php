@@ -18,7 +18,7 @@ class SyncCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'datasets:sync {dataset} {--source-folder=}';
+    protected $signature = 'datasets:sync {dataset} {--source-folder=} {--no-splash=0}';
 
     /**
      * The console command description.
@@ -41,11 +41,11 @@ class SyncCommand extends Command
      */
     public function handle()
     {
-        $this->splash(sprintf("Processing specified dataset '%s'", $this->argument('dataset')));
+        $this->splash(sprintf("Processing specified dataset '%s':", $this->argument('dataset')), $this->option('no-splash'));
 
         $this->loadConfig();
 
-        $this->info('Configuration passed.');
+        $this->line('Dataset configuration requirements were met.');
         $this->line('');
 
         $this->importData($this->readData($this->downloadPath($this->getPath())));
