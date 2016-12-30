@@ -59,7 +59,7 @@ If you do setup your own collection, please let us know so that we can put it on
 
 `$ php artisan datasets:list`
 
-List available datasets that have been added to this package.
+Lists all the available dataset collectioins available to be installed.
 
 ### Install
 
@@ -72,6 +72,8 @@ Installs the specified dataset. This will create the table in the database and d
 `$ php artisan datasets:migrate {dataset}`
 
 Setup the table in the database. This will create the migration file in the right spot and add to the migrations table.
+
+Use this console command when scheduling dataset update.
 
 ### Sync
 
