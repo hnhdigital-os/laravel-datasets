@@ -224,18 +224,22 @@ class SyncCommand extends Command
                 }
             }
 
+            unset($row);
+
             // Check modify for any specific key manipulations.
             if (array_has($this->config, 'modify')) {
                 foreach ($new_row as $key => &$value) {
                     if (array_has($this->config['modify'], $key)) {
                         $this->config['modify'][$key]($value, $new_row);
                     }
+                    unset($value);
                 }
             }
 
             if (count($new_row)) {
                 $result[] = $new_row;
             }
+
             $this->progress_bar->advance();
         }
 
