@@ -3,12 +3,15 @@
 namespace Bluora\LaravelDatasets\Commands;
 
 use Bluora\LaravelDatasets\Models\ImportModel;
+use Bluora\LaravelDatasets\Traits\CommandTrait;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
 
 class SyncDataCommand extends Command
 {
+    use CommandTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -37,17 +40,7 @@ class SyncDataCommand extends Command
      */
     public function handle()
     {
-
-        $this->line('');
-        $this->line("       _                          _   ___       _                _      ");
-        $this->line("      | |   __ _ _ _ __ ___ _____| | |   \ __ _| |_ __ _ ___ ___| |_ ___");
-        $this->line("      | |__/ _` | '_/ _` \ V / -_) | | |) / _` |  _/ _` (_-</ -_)  _(_-<");
-        $this->line("      |____\__,_|_| \__,_|\_/\___|_| |___/\__,_|\__\__,_/__/\___|\__/__/");
-        $this->line('');
-        $this->line("                                                          By H&H|Digital");
-        $this->line('');
-        $this->line("Processing '".$this->argument('dataset')."'.");
-        $this->line('');
+        $this->splash(sprintf("Processing specified dataset '%s'", $this->argument('dataset')));
 
         $this->loadConfig();
 
@@ -55,7 +48,6 @@ class SyncDataCommand extends Command
         $this->line('');
 
         $this->importData($this->readData($this->downloadPath($this->getPath())));
-
 
         $this->info('Completed import.');
         $this->line('');
