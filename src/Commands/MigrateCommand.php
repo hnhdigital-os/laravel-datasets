@@ -4,10 +4,9 @@ namespace Bluora\LaravelDatasets\Commands;
 
 use Bluora\LaravelDatasets\Traits\CommandTrait;
 use DB;
-use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
-use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
+use League\Flysystem\Filesystem;
 
 class MigrateCommand extends Command
 {
@@ -106,7 +105,7 @@ class MigrateCommand extends Command
     /**
      * Get the next interation.
      *
-     * @return integer
+     * @return int
      *
      * @SupressWarnings(PHPMD.ExitExpression)
      */
@@ -123,7 +122,7 @@ class MigrateCommand extends Command
             exit(1);
         }
 
-        $files_filtered = array_filter($files, function($value) {
+        $files_filtered = array_filter($files, function ($value) {
             return stripos($value['filename'], date('Y_m_d')) !== false;
         });
 
@@ -137,6 +136,6 @@ class MigrateCommand extends Command
         $latest_file = array_pop($files_filtered);
         $latest_details = explode('_', $latest_file);
 
-        return (int)$latest_details[3]+1;
+        return (int) $latest_details[3] + 1;
     }
 }

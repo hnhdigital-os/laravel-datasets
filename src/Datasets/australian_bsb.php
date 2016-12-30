@@ -1,17 +1,17 @@
 <?php
 
-use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Ftp as Adapter;
+use League\Flysystem\Filesystem;
 
-/**
+/*
  * Australian BSB data
- * 
+ *
  * @source ftp://apca.com.au
  */
 
 return [
     'table'   => 'australian_bsb',
-    'path' => function($command) {
+    'path'    => function ($command) {
 
         // Connect to the host.
         $ftp = new Filesystem(new Adapter([
@@ -35,7 +35,7 @@ return [
             // Filter the folder's files to those containing 'BSBDirectory'
             $latest_file_name = sprintf('BSBDirectory%s-', date('My', $time));
 
-            $files_filtered = array_filter($files, function($value) use ($latest_file_name) {
+            $files_filtered = array_filter($files, function ($value) use ($latest_file_name) {
                 return stripos($value['filename'], $latest_file_name) !== false && $value['extension'] == 'csv';
             });
 
@@ -56,13 +56,13 @@ return [
         sort($files_filtered);
         $latest_file = array_pop($files_filtered);
 
-        $this->line("Path successfully generated.");
+        $this->line('Path successfully generated.');
 
         // Return the path so that we download it.
         return sprintf('ftp://apca.com.au/%s', $latest_file);
     },
     'no_header' => true,
-    'mapping' => [
+    'mapping'   => [
         0 => 'bsb',
         1 => 'bank',
         2 => 'branch',
@@ -73,6 +73,6 @@ return [
         7 => 'payment_types',
     ],
     'import_keys' => [
-        'bsb'
-    ]
+        'bsb',
+    ],
 ];

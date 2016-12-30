@@ -101,7 +101,7 @@ class SyncDataCommand extends Command
         $required_fields = ['table', 'path', 'mapping', 'import_keys'];
 
         foreach ($required_fields as $key) {
-             if (!array_has($config, $key)) {
+            if (!array_has($config, $key)) {
                 $this->error(sprintf('Missing \'%s\' from the dataset configuration file.', $key));
                 $this->line('');
                 $this->line('');
@@ -135,7 +135,6 @@ class SyncDataCommand extends Command
             $this->line('Generating dynamic download path.');
             $this->line('');
             if (is_numeric($path = $path($this))) {
-
                 exit($path);
             }
             $this->line('');
@@ -155,7 +154,7 @@ class SyncDataCommand extends Command
     /**
      * Download the file from the path.
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return string
      *
@@ -177,7 +176,6 @@ class SyncDataCommand extends Command
 
         // Download has occurred
         if ($code == 200) {
-
             return $res->getBody();
         }
 
@@ -191,7 +189,7 @@ class SyncDataCommand extends Command
     /**
      * Read the data and do our mapping.
      *
-     * @param  string $data
+     * @param string $data
      *
      * @return array
      */
@@ -239,8 +237,8 @@ class SyncDataCommand extends Command
             $this->progress_bar->advance();
         }
 
-        $this->line("     ");
-        $this->line("     ");
+        $this->line('     ');
+        $this->line('     ');
 
         return $result;
     }
@@ -248,7 +246,7 @@ class SyncDataCommand extends Command
     /**
      * Import data.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return void
      */
@@ -259,8 +257,7 @@ class SyncDataCommand extends Command
 
         $this->progress_bar = $this->output->createProgressBar(count($data));
 
-        foreach ($data as $row) {            
-
+        foreach ($data as $row) {
             $model_lookup = new ImportModel();
             $model_lookup->setTable(sprintf('data_%s', array_get($this->config, 'table')));
 
@@ -291,7 +288,7 @@ class SyncDataCommand extends Command
             $this->progress_bar->advance();
         }
 
-        $this->line("     ");
-        $this->line("     ");
+        $this->line('     ');
+        $this->line('     ');
     }
 }
