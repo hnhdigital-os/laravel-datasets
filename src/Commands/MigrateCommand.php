@@ -53,6 +53,8 @@ class MigrateCommand extends Command
      * Load and run migration.
      *
      * @return void
+     *
+     * @SupressWarnings(PHPMD.ExitExpression)
      */
     private function runMigration()
     {
@@ -104,6 +106,8 @@ class MigrateCommand extends Command
      * Get the next interation.
      *
      * @return integer
+     *
+     * @SupressWarnings(PHPMD.ExitExpression)
      */
     private function getNextInteration()
     {

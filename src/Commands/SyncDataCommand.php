@@ -58,6 +58,8 @@ class SyncDataCommand extends Command
      * Load config file.
      *
      * @return void
+     *
+     * @SupressWarnings(PHPMD.ExitExpression)
      */
     private function loadConfig()
     {
@@ -91,6 +93,8 @@ class SyncDataCommand extends Command
      * Check config file.
      *
      * @return void
+     *
+     * @SupressWarnings(PHPMD.ExitExpression)
      */
     private function checkConfig($config)
     {
@@ -122,6 +126,8 @@ class SyncDataCommand extends Command
      * Get path from string or via a closure.
      *
      * @return string
+     *
+     * @SupressWarnings(PHPMD.ExitExpression)
      */
     private function getPath()
     {
@@ -152,6 +158,8 @@ class SyncDataCommand extends Command
      * @param  string $path
      *
      * @return string
+     *
+     * @SupressWarnings(PHPMD.ExitExpression)
      */
     private function downloadPath($path)
     {

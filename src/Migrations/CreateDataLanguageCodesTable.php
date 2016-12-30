@@ -46,6 +46,6 @@ class CreateDataLanguageCodesTable extends Migration
     public function down()
     {
         self::dropUuidTrigger($this->table_name);
-        Schema::drop($table_name);
+        Schema::drop($this->table_name);
     }
 }
