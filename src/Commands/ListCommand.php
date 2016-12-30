@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use League\Flysystem\Adapter\Local as Adapter;
 use League\Flysystem\Filesystem;
 
-class ListDatasetsCommand extends Command
+class ListCommand extends Command
 {
     use CommandTrait;
 

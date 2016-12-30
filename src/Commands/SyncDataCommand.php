@@ -9,7 +9,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
 
-class SyncDataCommand extends Command
+class SyncCommand extends Command
 {
     use CommandTrait;
 

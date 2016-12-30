@@ -17,7 +17,7 @@ class ServiceProvider extends BaseServiceProvider
             $this->commands([
                 Commands\ListCommand::class,
                 Commands\MigrateCommand::class,
-                Commands\SyncDataCommand::class,
+                Commands\SyncCommand::class,
             ]);
         }
     }
