@@ -32,17 +32,26 @@ Enable the service provider by editing config/app.php:
     ];
 ```
 
-### Implemented datasets
+### Available datasets
 
-* Australian Banks
-* Australian BSB
-* Australian Postcodes
+[DATA.OKFN Collection](https://github.com/bluora/laravel-datasets-okfn)
+
+NOTE: This collection is included by default when you install this package.
+
 * Country Codes
 * Country Population
 * Country Population (current)
 * Language Codes
 
-Need a dataset? Build one, otherwise, request it and one of the developers will do it up for you.
+[Australia Collection](https://github.com/bluora/laravel-datasets-australia)
+* Australia Banks
+* Australia BSB
+* Australia Postcodes
+
+
+Need a dataset? Request it, Pull Request it, or build it. Use the DATA.OKFN as a template.
+
+If you do setup your own collection, please let us know so that we can put it on the official list.
 
 ## Usage
 

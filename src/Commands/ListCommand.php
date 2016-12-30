@@ -39,34 +39,40 @@ class ListCommand extends Command
      * @return mixed
      *
      * @SuppressWarnings(PHPMD.ExitExpression)
-     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function handle()
     {
         $this->splash('Listed below are the datasets available to this package:');
 
-        // Get folder contents of datasets
-        $datasets = new Filesystem(new Adapter(__DIR__.'/../Datasets'));
+        $source_packages = config('datasets.source', []);
 
-        try {
-            $files = $datasets->listContents();
-        } catch (\Exception $exception) {
-            $this->error($exception->getMessage());
+        foreach ($source_packages as $folder) {
 
-            exit(1);
-        }
+            // Get folder contents of datasets
+            $datasets = new Filesystem(new Adapter(base_path('vendor/'.$folder.'/config/')));
 
-        // Iterate over each one
-        foreach ($files as $file) {
-            $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$file['filename'].'\''));
-            if (count($result)) {
-                $this->info('* '.$file['filename'].' (setup)');
-            } else {
-                $this->line('* '.$file['filename']);
+            try {
+                $files = $datasets->listContents();
+            } catch (\Exception $exception) {
+                $this->error($exception->getMessage());
+
+                exit(1);
             }
+
+            $this->line($folder);
+            $this->line('');
+
+            // Iterate over each one
+            foreach ($files as $file) {
+
+                $this->checkTableExists($file['filename'], true)
+                    ? $this->info('* '.$file['filename'].' (installed)')
+                    : $this->line('* '.$file['filename']);
+            }
+
+            $this->line('');
         }
 
-        $this->line('');
         $this->line("You can run 'php artisan datasets:install [dataset]' to install the specified dataset.");
         $this->line('');
     }

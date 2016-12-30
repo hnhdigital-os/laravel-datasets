@@ -43,7 +43,8 @@ class SyncCommand extends Command
     {
         $this->splash(sprintf("Processing specified dataset '%s':", $this->argument('dataset')), $this->option('no-splash'));
 
-        $this->loadConfig();
+        $this->config = $this->loadConfig($this->argument('dataset'));
+        $this->checkTableExists($this->argument('dataset'));
 
         $this->line('Dataset configuration requirements were met.');
         $this->line('');
@@ -52,74 +53,6 @@ class SyncCommand extends Command
 
         $this->info('Completed import.');
         $this->line('');
-    }
-
-    /**
-     * Load config file.
-     *
-     * @return void
-     *
-     * @SuppressWarnings(PHPMD.ExitExpression)
-     */
-    private function loadConfig()
-    {
-        $datasets_source = __DIR__.'/../Datasets';
-
-        if (!empty($this->option('source-folder'))) {
-            $datasets_source = $this->option('source-folder');
-
-            if (!file_exists($datasets_source)) {
-                $this->error(sprintf('\'%s\' does not exist.', $this->option('source-folder')));
-                $this->line('');
-
-                exit(1);
-            }
-        }
-
-        $config_file = $datasets_source.'/'.$this->argument('dataset').'.php';
-
-        // Supplied dataset config file does not exist.
-        if (!file_exists($config_file)) {
-            $this->error(sprintf('\'%s\' does not exist.', $this->argument('dataset')));
-            $this->line('');
-
-            exit(1);
-        }
-
-        $this->checkConfig(include_once $config_file);
-    }
-
-    /**
-     * Check config file.
-     *
-     * @return void
-     *
-     * @SuppressWarnings(PHPMD.ExitExpression)
-     */
-    private function checkConfig($config)
-    {
-        $required_fields = ['table', 'path', 'mapping', 'import_keys'];
-
-        foreach ($required_fields as $key) {
-            if (!array_has($config, $key)) {
-                $this->error(sprintf('Missing \'%s\' from the dataset configuration file.', $key));
-                $this->line('');
-                $this->line('');
-
-                exit(1);
-            }
-        }
-
-        $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
-
-        if (count($result) == 0) {
-            $this->error(sprintf('\'%s\' table does not exist. Please migrate it first.', 'data_'.$this->argument('dataset')));
-            $this->line('');
-
-            exit(1);
-        }
-
-        $this->config = $config;
     }
 
     /**

@@ -71,7 +71,9 @@ class MigrateCommand extends Command
             exit(1);
         }
 
-        $migration_namespace = 'Bluora\\LaravelDatasets\\Migrations';
+        $dataset_config = $this->loadConfig($this->argument('dataset'));
+
+        $migration_namespace = $dataset_config['namespace'];
         $migration_class_name = sprintf('CreateData%sTable', studly_case($this->argument('dataset')));
         $migration_class = sprintf('%s\\%s', $migration_namespace, $migration_class_name);
 

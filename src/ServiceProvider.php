@@ -13,6 +13,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
+        // Console commands provided by this package.
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Commands\ListCommand::class,
@@ -21,5 +22,10 @@ class ServiceProvider extends BaseServiceProvider
                 Commands\SyncCommand::class,
             ]);
         }
+
+        // Publish the default config.
+        $this->publishes([
+            __DIR__.'/../config/config.datasets.php' => config_path('datasets.php'),
+        ]);
     }
 }
