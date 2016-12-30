@@ -214,7 +214,7 @@ class SyncDataCommand extends Command
         $result = [];
         $this->progress_bar = $this->output->createProgressBar(1);
 
-        foreach ($reader as $index => $row) {
+        foreach ($reader as $row) {
             $new_row = [];
 
             // Translate incoming data via mapping array.
