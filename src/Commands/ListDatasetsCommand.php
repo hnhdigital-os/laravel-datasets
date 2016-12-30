@@ -37,6 +37,9 @@ class ListDatasetsCommand extends Command
      * Execute the console command.
      *
      * @return mixed
+     *
+     * @SupressWarnings(PHPMD.ExitExpression)
+     * @SupressWarnings(PHPMD.ElseExpression)
      */
     public function handle()
     {
