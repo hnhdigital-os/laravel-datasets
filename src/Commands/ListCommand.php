@@ -49,7 +49,7 @@ class ListCommand extends Command
         foreach ($source_packages as $folder) {
 
             // Get folder contents of datasets
-            $datasets = new Filesystem(new Adapter(base_path('vendor/'.$folder.'/config/')));
+            $datasets = new Filesystem(new Adapter(base_path('vendor/'.$folder.'/datasets/')));
 
             try {
                 $files = $datasets->listContents();
