@@ -14,6 +14,18 @@ Via composer:
 
 `$ composer require bluora/laravel-datasets dev-master`
 
+### Laravel configuration
+
+Enable the service provider by editing config/app.php:
+
+```php
+    'providers' => [
+        ...
+        Bluora\LaravelDatasets\ServiceProvider::class,
+        ...
+    ];
+```
+
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/bluora/laravel-datasets/blob/master/CONTRIBUTING.md) for details.
