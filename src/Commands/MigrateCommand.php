@@ -61,7 +61,7 @@ class MigrateCommand extends Command
      * @SuppressWarnings(PHPMD.LongVariable)
      */
     private function runMigration()
-    {
+    { 
         $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
 
         if (count($result)) {
@@ -77,7 +77,7 @@ class MigrateCommand extends Command
 
         // Supplied dataset config file does not exist.
         if (!class_exists($migration_class)) {
-            $this->error(sprintf('\'%s\' does not exist.', $this->argument('dataset')));
+            $this->error(sprintf('\'%s\' does not exist.', $migration_class_name));
             $this->line('');
             $this->line('');
 
