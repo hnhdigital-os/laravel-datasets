@@ -180,13 +180,13 @@ class SyncDataCommand extends Command
 
         $reader = Reader::createFromString($data);
 
-        if (!array_has($this->config, 'no_header', false)) {
-            $reader = $reader->fetchAssoc(0);
-        }
-
         // Apply any filters.
         if (array_has($this->config, 'filter')) {
             $reader = $this->config['filter']($reader);
+        }
+
+        if (!array_has($this->config, 'no_header', false)) {
+            $reader = $reader->fetchAssoc(0);
         }
 
         $result = [];
