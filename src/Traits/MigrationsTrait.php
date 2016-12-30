@@ -9,10 +9,10 @@ trait MigrationsTrait
     /**
      * Convert the column to binary(16) and create trigger.
      *
-     * @param  string $table
-     * @param  string $column
+     * @param string $table
+     * @param string $column
      *
-     * @return void  
+     * @return void
      */
     public static function updateUuid($table, $column)
     {
@@ -26,7 +26,7 @@ trait MigrationsTrait
     /**
      * Drop the trigger associated with this table.
      *
-     * @param  string $table
+     * @param string $table
      *
      * @return void
      */

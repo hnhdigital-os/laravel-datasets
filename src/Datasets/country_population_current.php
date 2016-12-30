@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Country Population Current
- * 
+ * Country Population Current.
+ *
  * @source https://github.com/datasets/population
  */
 
@@ -13,10 +13,9 @@ return [
         'Country Name' => 'name',
         'Country Code' => 'code',
         'Year'         => 'year',
-        'Value'        => 'population',  
+        'Value'        => 'population',
     ],
-    'filter'  => function($reader) {
-
+    'filter'  => function ($reader) {
         if (!isset($_ENV['population_year'])) {
             // Find most recent year
             $year_list = array_unique(iterator_to_array($reader->fetchColumn(2), false));
@@ -26,10 +25,12 @@ return [
 
         $population_year = $_ENV['population_year'];
 
-        return $reader->addFilter(function($row) use ($population_year) { return array_get($row, 2, 0) === $population_year; });
+        return $reader->addFilter(function ($row) use ($population_year) {
+            return array_get($row, 2, 0) === $population_year;
+        });
     },
     'import_keys' => [
         'code',
         'year',
-    ]
+    ],
 ];

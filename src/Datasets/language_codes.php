@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Language Codes
- * 
+ * Language Codes.
+ *
  * @source https://github.com/datasets/language-codes
  */
 
@@ -17,6 +17,6 @@ return [
         'French'   => 'french',
     ],
     'import_keys' => [
-        'iso3166_1_alpha_3'
-    ]
+        'iso3166_1_alpha_3',
+    ],
 ];

@@ -5,8 +5,8 @@ namespace Bluora\LaravelDatasets\Commands;
 use Bluora\LaravelDatasets\Traits\CommandTrait;
 use DB;
 use Illuminate\Console\Command;
-use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
+use League\Flysystem\Filesystem;
 
 class ListDatasetsCommand extends Command
 {

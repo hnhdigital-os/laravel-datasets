@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Country Codes
- * 
+ * Country Codes.
+ *
  * @source https://github.com/datasets/country-codes
  */
 
@@ -39,13 +39,13 @@ return [
         'EDGAR'                            => 'edgar',
     ],
     'modify' => [
-        'name' => function(&$value, $data_row) {
+        'name' => function (&$value, $data_row) {
             if (empty($value)) {
                 $value = array_get($data_row, 'official_name_en', '');
             }
         },
     ],
     'import_keys' => [
-        'name'
-    ]
+        'name',
+    ],
 ];

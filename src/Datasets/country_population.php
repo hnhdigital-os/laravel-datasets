@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Country Population
- * 
+ * Country Population.
+ *
  * @source https://github.com/datasets/population
  */
 
@@ -13,10 +13,10 @@ return [
         'Country Name' => 'name',
         'Country Code' => 'code',
         'Year'         => 'year',
-        'Value'        => 'population'
+        'Value'        => 'population',
     ],
     'import_keys' => [
         'code',
         'year',
-    ]
+    ],
 ];
