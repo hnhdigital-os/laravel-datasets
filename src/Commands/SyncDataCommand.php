@@ -4,6 +4,7 @@ namespace Bluora\LaravelDatasets\Commands;
 
 use Bluora\LaravelDatasets\Models\ImportModel;
 use Bluora\LaravelDatasets\Traits\CommandTrait;
+use DB;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
@@ -60,12 +61,24 @@ class SyncDataCommand extends Command
      */
     private function loadConfig()
     {
-        $config_file = __DIR__.'/../Datasets/'.$this->argument('dataset').'.php';
+        $datasets_source = __DIR__.'/../Datasets';
+
+        if (!empty($this->option('source-folder'))) {
+            $datasets_source = $this->option('source-folder');
+
+            if (!file_exists($datasets_source)) {
+                $this->error(sprintf('\'%s\' does not exist.', $option->option('source-folder')));
+                $this->line('');
+
+                exit(1);
+            }
+        }
+
+        $config_file = $datasets_source.'/'.$this->argument('dataset').'.php';
 
         // Supplied dataset config file does not exist.
         if (!file_exists($config_file)) {
             $this->error(sprintf('\'%s\' does not exist.', $this->argument('dataset')));
-            $this->line('');
             $this->line('');
 
             exit(1);
@@ -91,6 +104,15 @@ class SyncDataCommand extends Command
 
                 exit(1);
             }
+        }
+
+        $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
+
+        if (count($result) == 0) {
+            $this->error(sprintf('\'%s\' table does not exist. Please migrate it first.', 'data_'.$this->argument('dataset')));
+            $this->line('');
+
+            exit(1);
         }
 
         $this->config = $config;
