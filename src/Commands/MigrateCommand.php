@@ -57,8 +57,8 @@ class MigrateCommand extends Command
      *
      * @return void
      *
-     * @SupressWarnings(PHPMD.ExitExpression)
-     * @SupressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings(PHPMD.ExitExpression)
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     private function runMigration()
     {
@@ -111,7 +111,7 @@ class MigrateCommand extends Command
      *
      * @return int
      *
-     * @SupressWarnings(PHPMD.ExitExpression)
+     * @SuppressWarnings(PHPMD.ExitExpression)
      */
     private function getNextInteration()
     {

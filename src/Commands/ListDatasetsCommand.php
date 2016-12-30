@@ -38,8 +38,8 @@ class ListDatasetsCommand extends Command
      *
      * @return mixed
      *
-     * @SupressWarnings(PHPMD.ExitExpression)
-     * @SupressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings(PHPMD.ExitExpression)
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function handle()
     {
