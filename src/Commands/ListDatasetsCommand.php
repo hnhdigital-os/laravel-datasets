@@ -4,9 +4,9 @@ namespace Bluora\LaravelDatasets\Commands;
 
 use Bluora\LaravelDatasets\Traits\CommandTrait;
 use DB;
-use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
-use League\Csv\Reader;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Adapter\Local as Adapter;
 
 class ListDatasetsCommand extends Command
 {
@@ -42,5 +42,26 @@ class ListDatasetsCommand extends Command
     {
         $this->splash('Listing available datasets');
 
+        // Get folder contents of datasets
+        $datasets = new Filesystem(new Adapter(__DIR__.'/../Datasets'));
+
+        try {
+            $files = $datasets->listContents();
+        } catch (\Exception $exception) {
+            $this->error($exception->getMessage());
+
+            exit(1);
+        }
+
+        // Iterate over each one
+        foreach ($files as $file) {
+            $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$file['filename'].'\''));
+            if (count($result)) {
+                $this->info('* '.$file['filename'].' (installed)');
+            } else {
+                $this->line('* '.$file['filename']);
+            }
+        }
+        $this->line('');
     }
 }
