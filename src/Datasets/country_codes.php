@@ -44,6 +44,21 @@ return [
                 $value = array_get($data_row, 'official_name_en', '');
             }
         },
+        'iso4217_currency_minor_unit' => function (&$value, $data_row) {
+            if (empty($value)) {
+                $value = 0;
+            }
+        },
+        'iso4217_currency_numeric_code' => function (&$value, $data_row) {
+            if (empty($value)) {
+                $value = 0;
+            }
+        },
+        'geonameid' => function (&$value, $data_row) {
+            if (empty($value)) {
+                $value = 0;
+            }
+        }
     ],
     'import_keys' => [
         'name',
