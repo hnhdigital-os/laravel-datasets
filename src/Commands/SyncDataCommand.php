@@ -192,6 +192,8 @@ class SyncDataCommand extends Command
      * @param string $data
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function readData($data)
     {
