@@ -60,14 +60,14 @@ class ListCommand extends Command
         foreach ($files as $file) {
             $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$file['filename'].'\''));
             if (count($result)) {
-                $this->info('* '.$file['filename'].' (installed)');
+                $this->info('* '.$file['filename'].' (setup)');
             } else {
                 $this->line('* '.$file['filename']);
             }
         }
 
         $this->line('');
-        $this->line("You can run 'php artisan datasets:migrate [dataset]' to install the required database table.");
+        $this->line("You can run 'php artisan datasets:migrate [dataset]' to setup the required database table.");
         $this->line('');
     }
 }
