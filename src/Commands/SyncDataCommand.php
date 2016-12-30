@@ -69,7 +69,7 @@ class SyncDataCommand extends Command
             $datasets_source = $this->option('source-folder');
 
             if (!file_exists($datasets_source)) {
-                $this->error(sprintf('\'%s\' does not exist.', $option->option('source-folder')));
+                $this->error(sprintf('\'%s\' does not exist.', $this->option('source-folder')));
                 $this->line('');
 
                 exit(1);
