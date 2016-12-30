@@ -26,6 +26,17 @@ Enable the service provider by editing config/app.php:
     ];
 ```
 
+## Usage
+
+`$ php artisan datasets:install {dataset}`
+Install the specified dataset. This will create the table in the database and do an initial sync of the data.
+
+`$ php artisan datasets:migrate {dataset}`
+Setup the table in the database. This will create the migration file in the right spot and add to the migrations table.
+
+`$ php artisan datasets:sync {dataset}`
+Downloads the data and insert/updates the existing records.
+
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/bluora/laravel-datasets/blob/master/CONTRIBUTING.md) for details.
