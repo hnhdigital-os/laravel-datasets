@@ -46,6 +46,10 @@ class MigrateCommand extends Command
 
         $this->info('Completed migration.');
         $this->line('');
+
+        $this->line('');
+        $this->line(sprintf("You can now run 'php artisan datasets:sync %s' to populate this database table.", $this->argument('dataset')));
+        $this->line('');
     }
 
     /**

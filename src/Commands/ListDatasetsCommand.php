@@ -65,6 +65,9 @@ class ListDatasetsCommand extends Command
                 $this->line('* '.$file['filename']);
             }
         }
+
+        $this->line('');
+        $this->line("You can run 'php artisan datasets:migrate [dataset]' to install the required database table.");
         $this->line('');
     }
 }
