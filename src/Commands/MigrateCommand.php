@@ -47,8 +47,6 @@ class MigrateCommand extends Command
         $this->line('');
         $this->line("                                                          By H&H|Digital");
         $this->line('');
-        $this->line('');
-        $this->line('');
         $this->line("Migrating database for '".$this->argument('dataset')."'.");
         $this->line('');
 

@@ -46,8 +46,6 @@ class SyncDataCommand extends Command
         $this->line('');
         $this->line("                                                          By H&H|Digital");
         $this->line('');
-        $this->line('');
-        $this->line('');
         $this->line("Processing '".$this->argument('dataset')."'.");
         $this->line('');
 
@@ -234,7 +232,7 @@ class SyncDataCommand extends Command
      */
     private function importData($data)
     {
-        $this->line('Importing...');
+        $this->line(sprintf('Importing %s records...', count($data)));
         $this->line('');
 
         $this->progress_bar = $this->output->createProgressBar(count($data));
