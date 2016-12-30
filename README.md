@@ -1,6 +1,12 @@
-# Laravel Datasets
+ ```
+    ___        _                     _         _  _      __                                 _
+   /   \ __ _ | |_  __ _  ___   ___ | |_  ___ | || |    / /   __ _  _ __  __ _ __   __ ___ | |
+  / /\ // _` || __|/ _` |/ __| / _ \| __|/ __|| || |_  / /   / _` || '__|/ _` |\ \ / // _ \| |
+ / /_//| (_| || |_| (_| |\__ \|  __/| |_ \__ \|__   _|/ /___| (_| || |  | (_| | \ V /|  __/| |
+/___,'  \__,_| \__|\__,_||___/ \___| \__||___/   |_|  \____/ \__,_||_|   \__,_|  \_/  \___||_|
+```
 
-Provides console commands, models and migration scripts to syncronize datasets mainly found at [github.com/datasets](https://github.com/datasets) and other sites. Configuration is done by array and any data manipulation using closures.
+Provides console commands, models and migration scripts to syncronize datasets. Datasets are defined by array based configuration whilst advanced manipulation or data retrieval can be done through inline closures.
 
 [![Latest Stable Version](https://poser.pugx.org/bluora/laravel-datasets/v/stable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Total Downloads](https://poser.pugx.org/bluora/laravel-datasets/downloads.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Latest Unstable Version](https://poser.pugx.org/bluora/laravel-datasets/v/unstable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![License](https://poser.pugx.org/bluora/laravel-datasets/license.svg)](https://packagist.org/packages/bluora/laravel-datasets)
 
@@ -26,8 +32,17 @@ Enable the service provider by editing config/app.php:
     ];
 ```
 
-## Usage
+### Implemented datasets
 
+* Australian Banks
+* Australian BSB
+* Australian Postcodes
+* Country Codes
+* Country Population
+* Country Population (current)
+* Language Codes
+
+## Usage
 
 ### List
 
