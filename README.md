@@ -1,6 +1,12 @@
-# Laravel Datasets
+ ```
+    ___        _                     _         _  _      __                                 _
+   /   \ __ _ | |_  __ _  ___   ___ | |_  ___ | || |    / /   __ _  _ __  __ _ __   __ ___ | |
+  / /\ // _` || __|/ _` |/ __| / _ \| __|/ __|| || |_  / /   / _` || '__|/ _` |\ \ / // _ \| |
+ / /_//| (_| || |_| (_| |\__ \|  __/| |_ \__ \|__   _|/ /___| (_| || |  | (_| | \ V /|  __/| |
+/___,'  \__,_| \__|\__,_||___/ \___| \__||___/   |_|  \____/ \__,_||_|   \__,_|  \_/  \___||_|
+```
 
-Provides console commands, models and migration scripts to syncronize datasets mainly found at [github.com/datasets](https://github.com/datasets) and other sites. Configuration is done by array and any data manipulation using closures.
+Provides console commands, models and migration scripts to syncronize datasets. Datasets are defined by array based configuration whilst advanced manipulation or data retrieval can be done through inline closures.
 
 [![Latest Stable Version](https://poser.pugx.org/bluora/laravel-datasets/v/stable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Total Downloads](https://poser.pugx.org/bluora/laravel-datasets/downloads.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Latest Unstable Version](https://poser.pugx.org/bluora/laravel-datasets/v/unstable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![License](https://poser.pugx.org/bluora/laravel-datasets/license.svg)](https://packagist.org/packages/bluora/laravel-datasets)
 
@@ -26,15 +32,39 @@ Enable the service provider by editing config/app.php:
     ];
 ```
 
+### Implemented datasets
+
+* Australian Banks
+* Australian BSB
+* Australian Postcodes
+* Country Codes
+* Country Population
+* Country Population (current)
+* Language Codes
+
 ## Usage
 
+### List
+
+`$ php artisan datasets:list`
+
+List available datasets that have been added to this package.
+
+### Install
+
 `$ php artisan datasets:install {dataset}`
-Install the specified dataset. This will create the table in the database and do an initial sync of the data.
+Installs the specified dataset. This will create the table in the database and do an initial sync of the data.
+
+### Migrate
 
 `$ php artisan datasets:migrate {dataset}`
+
 Setup the table in the database. This will create the migration file in the right spot and add to the migrations table.
 
+### Sync
+
 `$ php artisan datasets:sync {dataset}`
+
 Downloads the data and insert/updates the existing records.
 
 ## Contributing
