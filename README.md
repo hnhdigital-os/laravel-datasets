@@ -32,8 +32,17 @@ Enable the service provider by editing config/app.php:
     ];
 ```
 
-## Usage
+### Implemented datasets
 
+* Australian Banks
+* Australian BSB
+* Australian Postcodes
+* Country Codes
+* Country Population
+* Country Population (current)
+* Language Codes
+
+## Usage
 
 ### List
 
