@@ -53,6 +53,7 @@ List available datasets that have been added to this package.
 ### Install
 
 `$ php artisan datasets:install {dataset}`
+
 Installs the specified dataset. This will create the table in the database and do an initial sync of the data.
 
 ### Migrate
