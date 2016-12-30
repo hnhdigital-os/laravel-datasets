@@ -4,7 +4,7 @@ namespace Bluora\LaravelDatasets\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
-class DataCountryCodes extends EloquentModel
+class DataCountryPopulationCurrent extends EloquentModel
 {
     /**
      * The database table used by the model.
