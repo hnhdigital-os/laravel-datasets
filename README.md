@@ -60,7 +60,7 @@ If you do setup your own collection, please let us know so that we can put it on
 
 `$ php artisan datasets:list`
 
-Lists all the available dataset collectioins available to be installed.
+Lists all the available dataset collections available to be installed.
 
 ### Install
 
