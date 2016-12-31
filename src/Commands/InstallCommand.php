@@ -47,7 +47,6 @@ class InstallCommand extends Command
         }
 
         if ($exit_code) {
-
             return 1;
         }
 

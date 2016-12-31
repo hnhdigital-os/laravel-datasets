@@ -3,7 +3,6 @@
 namespace Bluora\LaravelDatasets\Commands;
 
 use Bluora\LaravelDatasets\Traits\CommandTrait;
-use DB;
 use Illuminate\Console\Command;
 use League\Flysystem\Adapter\Local as Adapter;
 use League\Flysystem\Filesystem;
@@ -64,7 +63,6 @@ class ListCommand extends Command
 
             // Iterate over each one
             foreach ($files as $file) {
-
                 $this->checkTableExists($file['filename'], true)
                     ? $this->info('* '.$file['filename'].' (installed)')
                     : $this->line('* '.$file['filename']);
