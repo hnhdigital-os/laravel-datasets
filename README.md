@@ -6,7 +6,7 @@
 /___,'  \__,_| \__|\__,_||___/ \___| \__||___/   |_|  \____/ \__,_||_|   \__,_|  \_/  \___||_|
 ```
 
-Provides console commands, models and migration scripts to syncronize datasets. Datasets are defined by array based configuration whilst advanced manipulation or data retrieval can be done through inline closures.
+Provides console commands, models and migration scripts to syncronize datasets into your applications database. Datasets are defined by array based configuration whilst advanced manipulation or data retrieval can be done through inline closures.
 
 [![Latest Stable Version](https://poser.pugx.org/bluora/laravel-datasets/v/stable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Total Downloads](https://poser.pugx.org/bluora/laravel-datasets/downloads.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Latest Unstable Version](https://poser.pugx.org/bluora/laravel-datasets/v/unstable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Built for Laravel](https://img.shields.io/badge/Built_for-Laravel-green.svg)](https://laravel.com/) [![License](https://poser.pugx.org/bluora/laravel-datasets/license.svg)](https://packagist.org/packages/bluora/laravel-datasets)
 
