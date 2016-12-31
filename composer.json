@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^6.1",
         "league/flysystem": "^1.0",
         "league/csv": "^8.0",
-        "bluora/laravel-datasets-okfn": "dev-master"
+        "bluora/laravel-datasets-okfn": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*",
