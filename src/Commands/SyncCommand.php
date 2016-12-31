@@ -4,7 +4,6 @@ namespace Bluora\LaravelDatasets\Commands;
 
 use Bluora\LaravelDatasets\Models\ImportModel;
 use Bluora\LaravelDatasets\Traits\CommandTrait;
-use DB;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
 use League\Csv\Reader;

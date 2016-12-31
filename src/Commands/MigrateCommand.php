@@ -61,7 +61,7 @@ class MigrateCommand extends Command
      * @SuppressWarnings(PHPMD.LongVariable)
      */
     private function runMigration()
-    { 
+    {
         $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
 
         if (count($result)) {

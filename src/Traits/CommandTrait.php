@@ -11,11 +11,11 @@ trait CommandTrait
     /**
      * Display the splash.
      *
-     * @param  string  $text
-     * @param  boolean $hide_splash
-     * 
+     * @param string $text
+     * @param bool   $hide_splash
+     *
      * @return void
-     * 
+     *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     protected function splash($text, $hide_splash = false)
@@ -38,10 +38,10 @@ trait CommandTrait
     /**
      * Get list of dataset's paths, or a specific dataset's path.
      *
-     * @param  boolean $dataset
+     * @param bool $dataset
      *
      * @return array|string
-     * 
+     *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      * @SuppressWarnings(PHPMD.ExitExpression)
      */
@@ -99,6 +99,7 @@ trait CommandTrait
         $config_file = $this->getDatasets($dataset);
         $config = include $config_file;
         $this->checkConfig($config);
+
         return $config;
     }
 
@@ -127,8 +128,8 @@ trait CommandTrait
     /**
      * Check if the table exists.
      *
-     * @param string  $dataset
-     * @param boolean $no_exit
+     * @param string $dataset
+     * @param bool   $no_exit
      *
      * @return void
      *
