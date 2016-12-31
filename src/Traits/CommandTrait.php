@@ -97,7 +97,7 @@ trait CommandTrait
     protected function loadConfig($dataset)
     {
         $config_file = $this->getDatasets($dataset);
-        $config = include_once $config_file;
+        $config = include $config_file;
         $this->checkConfig($config);
         return $config;
     }
