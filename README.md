@@ -6,7 +6,7 @@
 /___,'  \__,_| \__|\__,_||___/ \___| \__||___/   |_|  \____/ \__,_||_|   \__,_|  \_/  \___||_|
 ```
 
-Provides console commands, models and migration scripts to syncronize datasets. Datasets are defined by array based configuration whilst advanced manipulation or data retrieval can be done through inline closures.
+Provides console commands, models and migration scripts to syncronize datasets into your applications database. Datasets are defined by array based configuration whilst advanced manipulation or data retrieval can be done through inline closures.
 
 [![Latest Stable Version](https://poser.pugx.org/bluora/laravel-datasets/v/stable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Total Downloads](https://poser.pugx.org/bluora/laravel-datasets/downloads.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Latest Unstable Version](https://poser.pugx.org/bluora/laravel-datasets/v/unstable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Built for Laravel](https://img.shields.io/badge/Built_for-Laravel-green.svg)](https://laravel.com/) [![License](https://poser.pugx.org/bluora/laravel-datasets/license.svg)](https://packagist.org/packages/bluora/laravel-datasets)
 
@@ -34,7 +34,7 @@ Enable the service provider by editing config/app.php:
 
 ### Available datasets
 
-#### [DATA.OKFN Collection](https://github.com/bluora/laravel-datasets-okfn) (GitHub)
+#### [DATA.OKFN Collection](https://github.com/bluora/laravel-datasets-okfn) (bluora/laravel-datasets-okfn)
 
 NOTE: This collection is included by default when you install this package.
 
@@ -43,7 +43,7 @@ NOTE: This collection is included by default when you install this package.
 * Country Population (current)
 * Language Codes
 
-#### [Australia Collection](https://github.com/bluora/laravel-datasets-australia) (GitHub)
+#### [Australia Collection](https://github.com/bluora/laravel-datasets-australia) (bluora/laravel-datasets-australia)
 
 * Banks
 * BSB
@@ -60,7 +60,7 @@ If you do setup your own collection, please let us know so that we can put it on
 
 `$ php artisan datasets:list`
 
-Lists all the available dataset collectioins available to be installed.
+Lists all the available dataset collections available to be installed.
 
 ### Install
 
