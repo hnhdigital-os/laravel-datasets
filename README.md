@@ -14,7 +14,7 @@ Provides console commands, models and migration scripts to syncronize datasets. 
 
 This package has been developed by H&H|Digital, an Australian botique developer. Visit us at [hnh.digital](http://hnh.digital).
 
-## Install
+## Installation
 
 Via composer:
 
