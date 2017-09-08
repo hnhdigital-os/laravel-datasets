@@ -1,12 +1,12 @@
 {
-    "name": "bluora/laravel-datasets",
+    "name": "hnhdigital-os/laravel-datasets",
     "description": "Provides console commands, models and migration scripts to syncronize datasets.",
     "keywords": ["laravel","datasets"],
     "license": "MIT",
     "authors": [
         {
             "name": "Rocco Howard",
-            "email": "rocco@bluora.com.au"
+            "email": "rocco@hnh.digital"
         }
     ],
     "require": {
@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^6.1",
         "league/flysystem": "^1.0",
         "league/csv": "^8.0",
-        "bluora/laravel-datasets-okfn": "~1.0"
+        "hnhdigital-os/laravel-datasets-okfn": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*",
