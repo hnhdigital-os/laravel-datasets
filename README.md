@@ -8,9 +8,9 @@
 
 Provides console commands, models and migration scripts to syncronize datasets into your applications database. Datasets are defined by array based configuration whilst advanced manipulation or data retrieval can be done through inline closures.
 
-[![Latest Stable Version](https://poser.pugx.org/bluora/laravel-datasets/v/stable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Total Downloads](https://poser.pugx.org/bluora/laravel-datasets/downloads.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Latest Unstable Version](https://poser.pugx.org/bluora/laravel-datasets/v/unstable.svg)](https://packagist.org/packages/bluora/laravel-datasets) [![Built for Laravel](https://img.shields.io/badge/Built_for-Laravel-green.svg)](https://laravel.com/) [![License](https://poser.pugx.org/bluora/laravel-datasets/license.svg)](https://packagist.org/packages/bluora/laravel-datasets)
+[![Latest Stable Version](https://poser.pugx.org/hnhdigital-os/laravel-datasets/v/stable.svg)](https://packagist.org/packages/hnhdigital-os/laravel-datasets) [![Total Downloads](https://poser.pugx.org/hnhdigital-os/laravel-datasets/downloads.svg)](https://packagist.org/packages/hnhdigital-os/laravel-datasets) [![Latest Unstable Version](https://poser.pugx.org/hnhdigital-os/laravel-datasets/v/unstable.svg)](https://packagist.org/packages/hnhdigital-os/laravel-datasets) [![Built for Laravel](https://img.shields.io/badge/Built_for-Laravel-green.svg)](https://laravel.com/) [![License](https://poser.pugx.org/hnhdigital-os/laravel-datasets/license.svg)](https://packagist.org/packages/hnhdigital-os/laravel-datasets)
 
-[![Build Status](https://travis-ci.org/bluora/laravel-datasets.svg?branch=master)](https://travis-ci.org/bluora/laravel-datasets) [![StyleCI](https://styleci.io/repos/77605381/shield?branch=master)](https://styleci.io/repos/77605381) [![Test Coverage](https://codeclimate.com/github/bluora/laravel-datasets/badges/coverage.svg)](https://codeclimate.com/github/bluora/laravel-datasets/coverage) [![Issue Count](https://codeclimate.com/github/bluora/laravel-datasets/badges/issue_count.svg)](https://codeclimate.com/github/bluora/laravel-datasets) [![Code Climate](https://codeclimate.com/github/bluora/laravel-datasets/badges/gpa.svg)](https://codeclimate.com/github/bluora/laravel-datasets) 
+[![Build Status](https://travis-ci.org/hnhdigital-os/laravel-datasets.svg?branch=master)](https://travis-ci.org/hnhdigital-os/laravel-datasets) [![StyleCI](https://styleci.io/repos/77605381/shield?branch=master)](https://styleci.io/repos/77605381) [![Test Coverage](https://codeclimate.com/github/hnhdigital-os/laravel-datasets/badges/coverage.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-datasets/coverage) [![Issue Count](https://codeclimate.com/github/hnhdigital-os/laravel-datasets/badges/issue_count.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-datasets) [![Code Climate](https://codeclimate.com/github/hnhdigital-os/laravel-datasets/badges/gpa.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-datasets) 
 
 This package has been developed by H&H|Digital, an Australian botique developer. Visit us at [hnh.digital](http://hnh.digital).
 
@@ -18,7 +18,7 @@ This package has been developed by H&H|Digital, an Australian botique developer.
 
 Via composer:
 
-`$ composer require bluora/laravel-datasets ~1.0`
+`$ composer require hnhdigital-os/laravel-datasets ~1.0`
 
 ### Laravel configuration
 
@@ -34,7 +34,7 @@ Enable the service provider by editing config/app.php:
 
 ### Available datasets
 
-#### [DATA.OKFN Collection](https://github.com/bluora/laravel-datasets-okfn) (bluora/laravel-datasets-okfn)
+#### [DATA.OKFN Collection](https://github.com/hnhdigital-os/laravel-datasets-okfn) (hnhdigital-os/laravel-datasets-okfn)
 
 NOTE: This collection is included by default when you install this package.
 
@@ -43,7 +43,7 @@ NOTE: This collection is included by default when you install this package.
 * Country Population (current)
 * Language Codes
 
-#### [Australia Collection](https://github.com/bluora/laravel-datasets-australia) (bluora/laravel-datasets-australia)
+#### [Australia Collection](https://github.com/hnhdigital-os/laravel-datasets-australia) (hnhdigital-os/laravel-datasets-australia)
 
 * Banks
 * BSB
@@ -84,13 +84,13 @@ Downloads the data and insert/updates the existing records.
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/bluora/laravel-datasets/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/hnhdigital-os/laravel-datasets/blob/master/CONTRIBUTING.md) for details.
 
 ## Credits
 
 * [Rocco Howard](https://github.com/therocis)
-* [All Contributors](https://github.com/bluora/laravel-datasets/contributors)
+* [All Contributors](https://github.com/hnhdigital-os/laravel-datasets/contributors)
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/bluora/laravel-datasets/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/hnhdigital-os/laravel-datasets/blob/master/LICENSE) for more information.
