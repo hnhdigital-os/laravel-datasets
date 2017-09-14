@@ -13,7 +13,7 @@
         "php": ">=5.6.0",
         "guzzlehttp/guzzle": "^6.1",
         "league/flysystem": "^1.0",
-        "league/csv": "^8.0",
+        "league/csv": "^9.0",
         "hnhdigital-os/laravel-datasets-okfn": "~1.0"
     },
     "require-dev": {
