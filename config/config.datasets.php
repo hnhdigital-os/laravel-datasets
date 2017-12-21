@@ -2,6 +2,6 @@
 
 return [
     'source' => [
-        'bluora/laravel-datasets-okfn',
+        'hnhdigital-os/laravel-datasets-okfn',
     ],
 ];
