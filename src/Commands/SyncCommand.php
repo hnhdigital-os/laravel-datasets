@@ -140,7 +140,7 @@ class SyncCommand extends Command
         }
 
         if (!array_has($this->config, 'no_header', false)) {
-            $reader = $reader->fetchAssoc(0);
+            $reader->setHeaderOffset(0);
         }
 
         $result = [];
