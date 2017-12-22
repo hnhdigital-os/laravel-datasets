@@ -35,7 +35,7 @@ class InstallCommand extends Command
 
         if (count(config('database.connections', [])) > 1) {
             $available_connections = array_keys(config('database.connections'));
-            $default_connection = array_search(config('database.default'), $available_connections);            
+            $default_connection = array_search(config('database.default'), $available_connections);
             $connection = $this->choice('Which connection do we use?', $available_connections, $default_connection);
         } else {
             $connection = config('database.default');
@@ -74,14 +74,13 @@ class InstallCommand extends Command
     private function exportConfig($connection)
     {
         if (!config('datasets.'.$this->argument('dataset').'.connection') || config('datasets.'.$this->argument('dataset').'.connection') !== $connection) {
-
             config(['datasets.'.$this->argument('dataset').'.connection' => $connection]);
             $config_contents = var_export(config('datasets'), true);
             $config_contents = str_replace(['array (', '),'], ['[', '],'], $config_contents);
-            $config_contents = "<?php\n\nreturn ".$config_contents."];";
+            $config_contents = "<?php\n\nreturn ".$config_contents.'];';
             $config_contents = str_replace(')];', '];', $config_contents);
-            $config_contents = preg_replace("/^([\s]*)([0-9]+) => (.*?)$/m", "$1$3", $config_contents);
-            $config_contents = preg_replace("/=>([\s]*)\[/m", "=> [", $config_contents);
+            $config_contents = preg_replace("/^([\s]*)([0-9]+) => (.*?)$/m", '$1$3', $config_contents);
+            $config_contents = preg_replace("/=>([\s]*)\[/m", '=> [', $config_contents);
             file_put_contents(config_path('datasets.php'), $config_contents);
         }
     }
