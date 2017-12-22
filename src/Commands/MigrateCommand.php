@@ -64,7 +64,7 @@ class MigrateCommand extends Command
     {
         if (count(config('database.connections', [])) > 1) {
             $available_connections = array_keys(config('database.connections'));
-            $default_connection = array_search(config('database.default'), $available_connections);            
+            $default_connection = array_search(config('database.default'), $available_connections);
             $connection = $this->choice('Which connection do we use?', $available_connections, $default_connection);
         } else {
             $connection = config('database.default');

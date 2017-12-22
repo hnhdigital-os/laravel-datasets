@@ -156,7 +156,7 @@ trait CommandTrait
     /**
      * Get the database connection.
      *
-     * @param  string $dataset
+     * @param string $dataset
      *
      * @return string
      */
