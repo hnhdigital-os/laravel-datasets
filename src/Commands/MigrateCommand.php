@@ -40,15 +40,15 @@ class MigrateCommand extends Command
      */
     public function handle()
     {
-        $this->splash(sprintf("Migrating database for '%s'.", $this->argument('dataset')), $this->option('no-splash'));
+        $this->splash(sprintf(" Migrating database for '%s'.", $this->argument('dataset')), $this->option('no-splash'));
 
         $this->runMigration();
 
-        $this->info('Completed migration.');
+        $this->info(' Completed migration.');
         $this->line('');
 
         $this->line('');
-        $this->line(sprintf("You can now run 'php artisan datasets:sync %s' to populate this database table.", $this->argument('dataset')));
+        $this->line(sprintf(" You can now run 'php artisan datasets:sync %s' to populate this database table.", $this->argument('dataset')));
         $this->line('');
     }
 
@@ -62,7 +62,15 @@ class MigrateCommand extends Command
      */
     private function runMigration()
     {
-        $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
+        if (count(config('database.connections', [])) > 1) {
+            $available_connections = array_keys(config('database.connections'));
+            $default_connection = array_search(config('database.default'), $available_connections);            
+            $connection = $this->choice('Which connection do we use?', $available_connections, $default_connection);
+        } else {
+            $connection = config('database.default');
+        }
+
+        $result = DB::connection($connection)->select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
 
         if (count($result)) {
             $this->error(sprintf('\'%s\' table already exists.', 'data_'.$this->argument('dataset')));
@@ -91,16 +99,16 @@ class MigrateCommand extends Command
 
         // Migrate the database.
         $migration = new $migration_class();
-        $migration->up();
+        $migration->up($connection);
 
         $next_interation = $this->getNextInteration();
 
         // Create an extension of this migration script in the database/migrations folder.
-        $migration_alias_file_name = sprintf('%s_%s_create_%s_table', date('Y_m_d'), str_pad($next_interation, 6, '0', STR_PAD_LEFT), $this->argument('dataset'));
+        $migration_alias_file_name = sprintf('%s_%s_create_%s_table', date('Y_m_d'), str_pad($next_interation, 3, '0', STR_PAD_LEFT), $this->argument('dataset'));
         $migration_alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $migration_alias_file_name);
         $migration_alias_class = sprintf('Create%sTable', studly_case($this->argument('dataset')));
 
-        $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\n}\n", $migration_class, $migration_alias_class, $migration_class_name);
+        $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\tprotected $connection = '%s';\n\n}\n", $migration_class, $migration_alias_class, $migration_class_name, $connection);
 
         // Add the migration to the tracking table.
         file_put_contents($migration_alias_file, $contents);

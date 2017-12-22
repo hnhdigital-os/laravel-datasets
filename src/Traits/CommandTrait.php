@@ -138,7 +138,7 @@ trait CommandTrait
      */
     protected function checkTableExists($dataset, $no_exit = false)
     {
-        $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$dataset.'\''));
+        $result = DB::connection($this->connection($dataset))->select(DB::raw('SHOW TABLES LIKE \'data_'.$dataset.'\''));
 
         if (count($result) == 0) {
             if ($no_exit) {
@@ -151,5 +151,17 @@ trait CommandTrait
         }
 
         return true;
+    }
+
+    /**
+     * Get the database connection.
+     *
+     * @param  string $dataset
+     *
+     * @return string
+     */
+    protected function connection($dataset)
+    {
+        return config('datasets.data_'.$dataset.'.connection', config('database.default'));
     }
 }

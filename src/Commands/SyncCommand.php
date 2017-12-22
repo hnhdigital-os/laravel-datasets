@@ -202,6 +202,7 @@ class SyncCommand extends Command
 
         foreach ($data as $row) {
             $model_lookup = new ImportModel();
+            $model_lookup->setConnection($this->connection($this->argument('dataset')));
             $model_lookup->setTable(sprintf('data_%s', array_get($this->config, 'table')));
 
             foreach (array_get($this->config, 'import_keys', []) as $key) {
@@ -216,6 +217,7 @@ class SyncCommand extends Command
                 $new_model = true;
             }
 
+            $model->setConnection($this->connection($this->argument('dataset')));
             $model->setTable(sprintf('data_%s', array_get($this->config, 'table')));
 
             $count = 0;

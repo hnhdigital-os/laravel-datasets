@@ -33,7 +33,17 @@ class InstallCommand extends Command
     {
         $this->splash(sprintf("Installing '%s'.", $this->argument('dataset')));
 
-        $result = DB::select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
+        if (count(config('database.connections', [])) > 1) {
+            $available_connections = array_keys(config('database.connections'));
+            $default_connection = array_search(config('database.default'), $available_connections);            
+            $connection = $this->choice('Which connection do we use?', $available_connections, $default_connection);
+        } else {
+            $connection = config('database.default');
+        }
+
+        $this->exportConfig($connection);
+
+        $result = DB::connection($connection)->select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
         $exit_code = 0;
 
         if (count($result) == 0) {
@@ -42,7 +52,7 @@ class InstallCommand extends Command
                 '--no-splash' => 1,
             ]);
         } elseif (count($result) != 0) {
-            $this->info(sprintf("Dataset '%s' is already setup. Syncronizing data only.", $this->argument('dataset')));
+            $this->info(sprintf("Dataset '%s.%s' is already setup. Syncronizing data only.", $connection, $this->argument('dataset')));
             $this->line('');
         }
 
@@ -54,5 +64,25 @@ class InstallCommand extends Command
             'dataset'     => $this->argument('dataset'),
             '--no-splash' => 1,
         ]);
+    }
+
+    /**
+     * Export config back to the config file.
+     *
+     * @return void
+     */
+    private function exportConfig($connection)
+    {
+        if (!config('datasets.'.$this->argument('dataset').'.connection') || config('datasets.'.$this->argument('dataset').'.connection') !== $connection) {
+
+            config(['datasets.'.$this->argument('dataset').'.connection' => $connection]);
+            $config_contents = var_export(config('datasets'), true);
+            $config_contents = str_replace(['array (', '),'], ['[', '],'], $config_contents);
+            $config_contents = "<?php\n\nreturn ".$config_contents."];";
+            $config_contents = str_replace(')];', '];', $config_contents);
+            $config_contents = preg_replace("/^([\s]*)([0-9]+) => (.*?)$/m", "$1$3", $config_contents);
+            $config_contents = preg_replace("/=>([\s]*)\[/m", "=> [", $config_contents);
+            file_put_contents(config_path('datasets.php'), $config_contents);
+        }
     }
 }
