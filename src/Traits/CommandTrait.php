@@ -162,6 +162,6 @@ trait CommandTrait
      */
     protected function connection($dataset)
     {
-        return config('datasets.data_'.$dataset.'.connection', config('database.default'));
+        return config('datasets.'.$dataset.'.connection', config('database.default'));
     }
 }
