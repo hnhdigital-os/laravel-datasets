@@ -207,6 +207,8 @@ class SyncCommand extends Command
      * @param array &$row
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.CognitiveComplexity)
      */
     private function transformRow(&$row)
     {

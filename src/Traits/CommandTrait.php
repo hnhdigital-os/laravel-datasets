@@ -44,6 +44,7 @@ trait CommandTrait
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      * @SuppressWarnings(PHPMD.ExitExpression)
+     * @SuppressWarnings(PHPMD.CognitiveComplexity)
      */
     protected function getDatasets($dataset = false)
     {
