@@ -161,7 +161,7 @@ class MigrateCommand extends Command
 
         // Create an extension of this migration script in the database/migrations folder.
         $alias_file_name = sprintf('%s_%s_create_%s_table', date('Y_m_d'), str_pad($next_interation, 3, '0', STR_PAD_LEFT), $this->argument('dataset'));
-        $alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $migration_alias_file_name);
+        $alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $alias_file_name);
         $alias_class = sprintf('Create%sTable', studly_case($this->argument('dataset')));
 
         $class_name = preg_replace('/.*\\\\/', '', $class);
