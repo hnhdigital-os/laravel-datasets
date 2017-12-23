@@ -128,17 +128,21 @@ trait CommandTrait
     /**
      * Check if the table exists.
      *
-     * @param string $dataset
-     * @param bool   $no_exit
+     * @param string      $dataset
+     * @param bool        $no_exit
+     * @param bool|string $connection
      *
      * @return void
      *
      * @SuppressWarnings(PHPMD.ExitExpression)
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    protected function checkTableExists($dataset, $no_exit = false)
+    protected function checkTableExists($dataset, $no_exit = false, $connection = false)
     {
-        $result = DB::connection($this->connection($dataset))->select(DB::raw('SHOW TABLES LIKE \'data_'.$dataset.'\''));
+        $connection = $connection === false ? $this->connection($dataset) : $connection
+
+        $result = DB::connection($connection)
+            ->select(DB::raw('SHOW TABLES LIKE \'data_'.$dataset.'\''));
 
         if (count($result) == 0) {
             if ($no_exit) {
@@ -151,6 +155,23 @@ trait CommandTrait
         }
 
         return true;
+    }
+
+    /**
+     * Request connection or use default.
+     *
+     * @return string
+     */
+    protected function verifyConnection()
+    {
+        if (count(config('database.connections', [])) > 1) {
+            $available_connections = array_keys(config('database.connections'));
+            $default_connection = array_search(config('database.default'), $available_connections);
+
+            return $this->choice('Which connection do we use?', $available_connections, $default_connection);
+        }
+        
+        return config('database.default');
     }
 
     /**

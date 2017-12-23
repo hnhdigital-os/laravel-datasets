@@ -62,25 +62,21 @@ class MigrateCommand extends Command
      */
     private function runMigration()
     {
-        if (count(config('database.connections', [])) > 1) {
-            $available_connections = array_keys(config('database.connections'));
-            $default_connection = array_search(config('database.default'), $available_connections);
-            $connection = $this->choice('Which connection do we use?', $available_connections, $default_connection);
-        } else {
-            $connection = config('database.default');
-        }
+        // Verify which connection to use.
+        $connection = $this->verifyConnection();
 
-        $result = DB::connection($connection)->select(DB::raw('SHOW TABLES LIKE \'data_'.$this->argument('dataset').'\''));
-
-        if (count($result)) {
+        // Check if the data table exists against this connection.
+        if ($this->checkTableExists($this->argument('dataset'), true, $connection)) {
             $this->error(sprintf('\'%s\' table already exists.', 'data_'.$this->argument('dataset')));
             $this->line('');
 
             exit(1);
         }
 
+        // Load the configuration for this dataset.
         $dataset_config = $this->loadConfig($this->argument('dataset'));
 
+        // Calculate some reference variables.
         $migration_namespace = $dataset_config['namespace'];
         $migration_class_name = sprintf('CreateData%sTable', studly_case($this->argument('dataset')));
         $migration_class = sprintf('%s\\%s', $migration_namespace, $migration_class_name);
@@ -101,6 +97,7 @@ class MigrateCommand extends Command
         $migration = new $migration_class();
         $migration->up($connection);
 
+        // Interate the database file.
         $next_interation = $this->getNextInteration();
 
         // Create an extension of this migration script in the database/migrations folder.
