@@ -206,7 +206,7 @@ class SyncCommand extends Command
      *
      * @return void
      */
-    private function translateRow(&$row)
+    private function transformRow(&$row)
     {
         // Check modify for any specific key manipulations.
         if (array_has($this->config, 'modify')) {
