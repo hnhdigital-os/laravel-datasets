@@ -139,7 +139,7 @@ trait CommandTrait
      */
     protected function checkTableExists($dataset, $no_exit = false, $connection = false)
     {
-        $connection = $connection === false ? $this->connection($dataset) : $connection
+        $connection = $connection === false ? $this->connection($dataset) : $connection;
 
         $result = DB::connection($connection)
             ->select(DB::raw('SHOW TABLES LIKE \'data_'.$dataset.'\''));
