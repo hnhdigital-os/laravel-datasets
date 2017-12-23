@@ -185,4 +185,41 @@ trait CommandTrait
     {
         return config('datasets.'.$dataset.'.connection', config('database.default'));
     }
+
+    /**
+     * Get the next interation.
+     *
+     * @return int
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression)
+     */
+    private function getNextInteration()
+    {
+        // Get the next interator.
+        $migrations = new Filesystem(new Adapter(base_path('database/migrations')));
+
+        try {
+            $files = $migrations->listContents();
+        } catch (\Exception $exception) {
+            $this->error($exception->getMessage());
+
+            exit(1);
+        }
+
+        $files_filtered = array_filter($files, function ($value) {
+            return stripos($value['filename'], date('Y_m_d')) !== false;
+        });
+
+        if (count($files_filtered) == 0) {
+            return 1;
+        }
+
+        $files_filtered = array_column($files_filtered, 'path');
+
+        sort($files_filtered);
+        $latest_file = array_pop($files_filtered);
+        $latest_details = explode('_', $latest_file);
+
+        return (int) $latest_details[3] + 1;
+    }
 }

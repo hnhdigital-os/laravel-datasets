@@ -105,48 +105,13 @@ class MigrateCommand extends Command
         $migration_alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $migration_alias_file_name);
         $migration_alias_class = sprintf('Create%sTable', studly_case($this->argument('dataset')));
 
+        // Generate contents for database file.
         $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\tprotected $connection = '%s';\n\n}\n", $migration_class, $migration_alias_class, $migration_class_name, $connection);
 
         // Add the migration to the tracking table.
         file_put_contents($migration_alias_file, $contents);
 
+        // Update the migrations table.
         DB::unprepared(sprintf("INSERT INTO migrations SET migration='%s',batch=(SELECT max(batch)+1 FROM (SELECT batch FROM migrations) AS source_batch)", $migration_alias_file_name));
-    }
-
-    /**
-     * Get the next interation.
-     *
-     * @return int
-     *
-     * @SuppressWarnings(PHPMD.ExitExpression)
-     */
-    private function getNextInteration()
-    {
-        // Get the next interator.
-        $migrations = new Filesystem(new Adapter(base_path('database/migrations')));
-
-        try {
-            $files = $migrations->listContents();
-        } catch (\Exception $exception) {
-            $this->error($exception->getMessage());
-
-            exit(1);
-        }
-
-        $files_filtered = array_filter($files, function ($value) {
-            return stripos($value['filename'], date('Y_m_d')) !== false;
-        });
-
-        if (count($files_filtered) == 0) {
-            return 1;
-        }
-
-        $files_filtered = array_column($files_filtered, 'path');
-
-        sort($files_filtered);
-        $latest_file = array_pop($files_filtered);
-        $latest_details = explode('_', $latest_file);
-
-        return (int) $latest_details[3] + 1;
     }
 }
