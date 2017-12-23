@@ -26,5 +26,12 @@
         "psr-4": {
             "Bluora\\LaravelDatasets\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bluora\\LaravelDatasets\\ServiceProvider"
+            ]
+        }
     }
 }
