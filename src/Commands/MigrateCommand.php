@@ -112,6 +112,6 @@ class MigrateCommand extends Command
         file_put_contents($migration_alias_file, $contents);
 
         // Update the migrations table.
-        DB::unprepared(sprintf("INSERT INTO migrations SET migration='%s',batch=(SELECT max(batch)+1 FROM (SELECT batch FROM migrations) AS source_batch)", $migration_alias_file_name));
+        DB::connection(config('database.default'))->unprepared(sprintf("INSERT INTO migrations SET migration='%s',batch=(SELECT max(batch)+1 FROM (SELECT batch FROM migrations) AS source_batch)", $migration_alias_file_name));
     }
 }
