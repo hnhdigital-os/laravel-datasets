@@ -147,32 +147,7 @@ class SyncCommand extends Command
         $this->progress_bar = $this->output->createProgressBar(1);
 
         foreach ($reader as $row) {
-            $new_row = [];
-
-            // Translate incoming data via mapping array.
-            foreach ($row as $key => $value) {
-                if (array_has($this->config['mapping'], $key)) {
-                    $new_row[array_get($this->config['mapping'], $key)] = $value;
-                }
-            }
-
-            unset($row);
-
-            // Check modify for any specific key manipulations.
-            if (array_has($this->config, 'modify')) {
-                foreach ($new_row as $key => &$value) {
-                    if (array_has($this->config['modify'], $key)) {
-                        $this->config['modify'][$key]($value, $new_row);
-                    }
-                    unset($value);
-                }
-            }
-
-            if (count($new_row)) {
-                $result[] = $new_row;
-            }
-
-            $this->progress_bar->advance();
+            $this->processRow($result, $row);
         }
 
         // Apply any filters.
@@ -184,6 +159,44 @@ class SyncCommand extends Command
         $this->line('     ');
 
         return $result;
+    }
+
+    /**
+     * Process the row in the data that is being interated.
+     *
+     * @param array &$result
+     * @param array &$row
+     *
+     * @return void
+     */
+    private function processRow(&$result, &$row)
+    {
+        $new_row = [];
+
+        // Translate incoming data via mapping array.
+        foreach ($row as $key => $value) {
+            if (array_has($this->config['mapping'], $key)) {
+                $new_row[array_get($this->config['mapping'], $key)] = $value;
+            }
+        }
+
+        unset($row);
+
+        // Check modify for any specific key manipulations.
+        if (array_has($this->config, 'modify')) {
+            foreach ($new_row as $key => &$value) {
+                if (array_has($this->config['modify'], $key)) {
+                    $this->config['modify'][$key]($value, $new_row);
+                }
+                unset($value);
+            }
+        }
+
+        if (count($new_row)) {
+            $result[] = $new_row;
+        }
+
+        $this->progress_bar->advance();
     }
 
     /**
