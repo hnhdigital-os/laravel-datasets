@@ -78,42 +78,46 @@ class MigrateCommand extends Command
     /**
      * Process the migration.
      *
+     * @param string $class
+     *
      * @return void
      */
-    private function processMigration()
+    private function processMigration($class)
     {
         // Verbose.
         $this->info('Migrating...');
         $this->line('');
 
         // Migrate the database.
-        $migration = new $migration_class();
+        $migration = new $migration_class($class);
         $migration->up($connection);
     }
 
     /**
      * Create the migration file.
      *
+     * @param string $class
+     *
      * @return void
      */
-    private function createMigrationFile()
+    private function createMigrationFile($class)
     {
         // Interate the database file.
         $next_interation = $this->getNextInteration();
 
         // Create an extension of this migration script in the database/migrations folder.
-        $migration_alias_file_name = sprintf('%s_%s_create_%s_table', date('Y_m_d'), str_pad($next_interation, 3, '0', STR_PAD_LEFT), $this->argument('dataset'));
-        $migration_alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $migration_alias_file_name);
-        $migration_alias_class = sprintf('Create%sTable', studly_case($this->argument('dataset')));
+        $alias_file_name = sprintf('%s_%s_create_%s_table', date('Y_m_d'), str_pad($next_interation, 3, '0', STR_PAD_LEFT), $this->argument('dataset'));
+        $alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $migration_alias_file_name);
+        $alias_class = sprintf('Create%sTable', studly_case($this->argument('dataset')));
 
         // Generate contents for database file.
-        $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\tprotected $connection = '%s';\n\n}\n", $migration_class, $migration_alias_class, $migration_class_name, $connection);
+        $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\tprotected $connection = '%s';\n\n}\n", $class, $alias_class, $class_name, $connection);
 
         // Add the migration to the tracking table.
-        file_put_contents($migration_alias_file, $contents);
+        file_put_contents($alias_file, $contents);
 
         // Update the migrations table.
-        DB::connection(config('database.default'))->unprepared(sprintf("INSERT INTO migrations SET migration='%s',batch=(SELECT max(batch)+1 FROM (SELECT batch FROM migrations) AS source_batch)", $migration_alias_file_name));
+        DB::connection(config('database.default'))->unprepared(sprintf("INSERT INTO migrations SET migration='%s',batch=(SELECT max(batch)+1 FROM (SELECT batch FROM migrations) AS source_batch)", $alias_file_name));
     }
 
     /**
