@@ -14,15 +14,15 @@ Provides console commands, models and migration scripts to syncronize datasets i
 
 This package has been developed by H&H|Digital, an Australian botique developer. Visit us at [hnh.digital](http://hnh.digital).
 
-## Installation
+## Install
 
 Via composer:
 
 `$ composer require hnhdigital-os/laravel-datasets ~1.0`
 
-### Laravel configuration
+This package's service provider will autoload from Laravel 5.5.
 
-Enable the service provider by editing config/app.php:
+To enable the service provider in versions prior to Laravel 5.4, edit the config/app.php:
 
 ```php
     'providers' => [
@@ -88,7 +88,7 @@ Please see [CONTRIBUTING](https://github.com/hnhdigital-os/laravel-datasets/blob
 
 ## Credits
 
-* [Rocco Howard](https://github.com/therocis)
+* [Rocco Howard](https://github.com/RoccoHoward)
 * [All Contributors](https://github.com/hnhdigital-os/laravel-datasets/contributors)
 
 ## License
