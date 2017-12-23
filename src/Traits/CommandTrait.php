@@ -165,10 +165,10 @@ trait CommandTrait
     protected function verifyConnection()
     {
         if (count(config('database.connections', [])) > 1) {
-            $available_connections = array_keys(config('database.connections'));
-            $default_connection = array_search(config('database.default'), $available_connections);
+            $connections = array_keys(config('database.connections'));
+            $default = array_search(config('database.default'), $connections);
 
-            return $this->choice('Which connection do we use?', $available_connections, $default_connection);
+            return $this->choice('Which connection do we use?', $connections, $default);
         }
         
         return config('database.default');
