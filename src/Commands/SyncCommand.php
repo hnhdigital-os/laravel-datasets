@@ -214,39 +214,52 @@ class SyncCommand extends Command
         $this->progress_bar = $this->output->createProgressBar(count($data));
 
         foreach ($data as $row) {
-            $model_lookup = new ImportModel();
-            $model_lookup->setConnection($this->connection($this->argument('dataset')));
-            $model_lookup->setTable(sprintf('data_%s', array_get($this->config, 'table')));
-
-            foreach (array_get($this->config, 'import_keys', []) as $key) {
-                $model_lookup = $model_lookup->where($key, array_get($row, $key, null));
-            }
-
-            $model = $model_lookup->first();
-            $new_model = false;
-
-            if (is_null($model)) {
-                $model = new ImportModel();
-                $new_model = true;
-            }
-
-            $model->setConnection($this->connection($this->argument('dataset')));
-            $model->setTable(sprintf('data_%s', array_get($this->config, 'table')));
-
-            $count = 0;
-
-            foreach ($row as $key => $value) {
-                if ($new_model || $model->$key !== $value) {
-                    $model->$key = $value;
-                    $count++;
-                }
-            }
-
-            $model->save();
-            $this->progress_bar->advance();
+            $this->processImportRow($data);
         }
 
         $this->line('     ');
         $this->line('     ');
+    }
+
+    /**
+     * Process the importing of the row.
+     *
+     * @param array &$row
+     *
+     * @return void
+     */
+    private function processImportRow(&$row)
+    {
+        $model_lookup = new ImportModel();
+        $model_lookup->setConnection($this->connection($this->argument('dataset')));
+        $model_lookup->setTable(sprintf('data_%s', array_get($this->config, 'table')));
+
+        foreach (array_get($this->config, 'import_keys', []) as $key) {
+            $model_lookup = $model_lookup->where($key, array_get($row, $key, null));
+        }
+
+        $model = $model_lookup->first();
+        $new_model = false;
+
+        if (is_null($model)) {
+            $model = new ImportModel();
+            $new_model = true;
+        }
+
+        $model->setConnection($this->connection($this->argument('dataset')));
+        $model->setTable(sprintf('data_%s', array_get($this->config, 'table')));
+
+        $count = 0;
+
+        // Assign values to the model.
+        foreach ($row as $key => $value) {
+            if ($new_model || $model->$key !== $value) {
+                $model->$key = $value;
+                $count++;
+            }
+        }
+
+        $model->save();
+        $this->progress_bar->advance();
     }
 }
