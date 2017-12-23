@@ -62,41 +62,42 @@ class MigrateCommand extends Command
      */
     private function runMigration()
     {
-        // Verify which connection to use.
-        $connection = $this->verifyConnection();
+        // Confirm connection and migration.
+        $connection = $this->confirmConnectionAndMigration();
 
-        // Check if the data table exists against this connection.
-        if ($this->checkTableExists($this->argument('dataset'), true, $connection)) {
-            $this->error(sprintf('\'%s\' table already exists.', 'data_'.$this->argument('dataset')));
-            $this->line('');
+        // Load the migration class.
+        $migration_class = $this->getMigrationClass();
 
-            exit(1);
-        }
+        // Process the migration.
+        $this->processMigration($migration_class);
 
-        // Load the configuration for this dataset.
-        $dataset_config = $this->loadConfig($this->argument('dataset'));
+        // Save this migration to the database/migrations folder.
+        $this->createMigrationFile();
+    }
 
-        // Calculate some reference variables.
-        $migration_namespace = $dataset_config['namespace'];
-        $migration_class_name = sprintf('CreateData%sTable', studly_case($this->argument('dataset')));
-        $migration_class = sprintf('%s\\%s', $migration_namespace, $migration_class_name);
-
-        // Supplied dataset config file does not exist.
-        if (!class_exists($migration_class)) {
-            $this->error(sprintf('\'%s\' does not exist.', $migration_class));
-            $this->line('');
-            $this->line('');
-
-            exit(1);
-        }
-
+    /**
+     * Process the migration.
+     *
+     * @return void
+     */
+    private function processMigration()
+    {
+        // Verbose.
         $this->info('Migrating...');
         $this->line('');
 
         // Migrate the database.
         $migration = new $migration_class();
         $migration->up($connection);
+    }
 
+    /**
+     * Create the migration file.
+     *
+     * @return void
+     */
+    private function createMigrationFile()
+    {
         // Interate the database file.
         $next_interation = $this->getNextInteration();
 
@@ -113,5 +114,53 @@ class MigrateCommand extends Command
 
         // Update the migrations table.
         DB::connection(config('database.default'))->unprepared(sprintf("INSERT INTO migrations SET migration='%s',batch=(SELECT max(batch)+1 FROM (SELECT batch FROM migrations) AS source_batch)", $migration_alias_file_name));
+    }
+
+    /**
+     * Confirm migration can occur by checking database.
+     *
+     * @return void
+     */
+    private function confirmConnectionAndMigration()
+    {
+        // Verify which connection to use.
+        $connection = $this->verifyConnection();
+
+        // Check if the data table exists against this connection.
+        if ($this->checkTableExists($this->argument('dataset'), true, $connection)) {
+            $this->error(sprintf('\'%s\' table already exists.', 'data_'.$this->argument('dataset')));
+            $this->line('');
+
+            exit(1);
+        }
+
+        return $connection;
+    }
+
+    /**
+     * Get the migration class.
+     *
+     * @return void
+     */
+    private function getMigrationClass()
+    {
+        // Load the configuration for this dataset.
+        $config = $this->loadConfig($this->argument('dataset'));
+
+        // Calculate some reference variables.
+        $namespace = $config['namespace'];
+        $class_name = sprintf('CreateData%sTable', studly_case($this->argument('dataset')));
+        $class = sprintf('%s\\%s', $namespace, $class_name);
+
+        // Supplied dataset config file does not exist.
+        if (!class_exists($class)) {
+            $this->error(sprintf('\'%s\' does not exist.', $class));
+            $this->line('');
+            $this->line('');
+
+            exit(1);
+        }
+
+        return $class;
     }
 }
