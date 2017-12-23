@@ -70,7 +70,7 @@ class MigrateCommand extends Command
         $this->processMigration($connection, $migration_class);
 
         // Save this migration to the database/migrations folder.
-        $this->createMigrationFile($connection);
+        $this->createMigrationFile($connection, $migration_class);
     }
 
     /**
