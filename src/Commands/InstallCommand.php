@@ -15,7 +15,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'datasets:install {dataset}';
+    protected $signature = 'datasets:install {dataset?}';
 
     /**
      * The console command description.
@@ -31,6 +31,12 @@ class InstallCommand extends Command
      */
     public function handle()
     {
+        if (empty($this->argument('dataset'))) {
+            $this->call('datasets:list');
+
+            return 1;
+        }
+
         $this->splash(sprintf("Installing '%s'.", $this->argument('dataset')));
 
         // Verify which connection to use.
