@@ -77,10 +77,11 @@ class InstallCommand extends Command
             config(['datasets.'.$this->argument('dataset').'.connection' => $connection]);
             $config_contents = var_export(config('datasets'), true);
             $config_contents = str_replace(['array (', '),'], ['[', '],'], $config_contents);
-            $config_contents = "<?php\n\nreturn ".$config_contents.'];';
+            $config_contents = "<?php\n\nreturn ".$config_contents."];\n";
             $config_contents = str_replace(')];', '];', $config_contents);
             $config_contents = preg_replace("/^([\s]*)([0-9]+) => (.*?)$/m", '$1$3', $config_contents);
             $config_contents = preg_replace("/=>([\s]*)\[/m", '=> [', $config_contents);
+            $config_contents = preg_replace("/(^|\G) {2}/m", '    $1', $config_contents);
             file_put_contents(config_path('datasets.php'), $config_contents);
         }
     }
