@@ -164,6 +164,8 @@ class MigrateCommand extends Command
         $alias_file = sprintf('%s/%s.php', base_path('database/migrations'), $migration_alias_file_name);
         $alias_class = sprintf('Create%sTable', studly_case($this->argument('dataset')));
 
+        $class_name = preg_replace('/.*\\\\/', '', $class);
+
         // Generate contents for database file.
         $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\tprotected $connection = '%s';\n\n}\n", $class, $alias_class, $class_name, $connection);
 
