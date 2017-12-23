@@ -147,8 +147,8 @@ class SyncCommand extends Command
         $this->progress_bar = $this->output->createProgressBar(1);
 
         foreach ($reader as $row) {
-            if (count($new_row = $this->processRow($row))) {
-                $result[] = $new_row;
+            if (count($row = $this->processRow($row))) {
+                $result[] = $row;
             }
             $this->progress_bar->advance();
         }
@@ -167,14 +167,16 @@ class SyncCommand extends Command
     /**
      * Process the row in the data that is being interated.
      *
-     * @param array &$row
+     * @param array $row
      *
      * @return void
      */
-    private function processRow(&$row)
+    private function processRow($row)
     {
         $this->translateRow($row);
         $this->transformRow($row);
+
+        return $row;
     }
 
     /**
