@@ -171,7 +171,7 @@ trait CommandTrait
 
             return $this->choice('Which connection do we use?', $connections, $default);
         }
-        
+
         return config('database.default');
     }
 
