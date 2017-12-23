@@ -124,6 +124,8 @@ class MigrateCommand extends Command
      * Confirm migration can occur by checking database.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression)
      */
     private function confirmConnectionAndMigration()
     {
@@ -145,6 +147,8 @@ class MigrateCommand extends Command
      * Get the migration class.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression)
      */
     private function getMigrationClass()
     {
