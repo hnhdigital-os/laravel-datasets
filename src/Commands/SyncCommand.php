@@ -147,7 +147,10 @@ class SyncCommand extends Command
         $this->progress_bar = $this->output->createProgressBar(1);
 
         foreach ($reader as $row) {
-            $this->processRow($result, $row);
+            if (count($new_row = $this->processRow($row))) {
+                $result[] = $new_row;
+            }
+            $this->progress_bar->advance();
         }
 
         // Apply any filters.
@@ -164,12 +167,24 @@ class SyncCommand extends Command
     /**
      * Process the row in the data that is being interated.
      *
-     * @param array &$result
      * @param array &$row
      *
      * @return void
      */
-    private function processRow(&$result, &$row)
+    private function processRow(&$row)
+    {
+        $this->translateRow($row);
+        $this->transformRow($row);
+    }
+
+    /**
+     * Translate the row using the configured mapping rules.
+     *
+     * @param array &$row
+     *
+     * @return void
+     */
+    private function translateRow(&$row)
     {
         $new_row = [];
 
@@ -180,23 +195,28 @@ class SyncCommand extends Command
             }
         }
 
-        unset($row);
+        // Replace with translated row.
+        $row = $new_row;
+    }
 
+    /**
+     * Transform the row using the configured modification rules.
+     *
+     * @param array &$row
+     *
+     * @return void
+     */
+    private function translateRow(&$row)
+    {
         // Check modify for any specific key manipulations.
         if (array_has($this->config, 'modify')) {
-            foreach ($new_row as $key => &$value) {
+            foreach ($row as $key => &$value) {
                 if (array_has($this->config['modify'], $key)) {
-                    $this->config['modify'][$key]($value, $new_row);
+                    $this->config['modify'][$key]($value, $row);
                 }
                 unset($value);
             }
         }
-
-        if (count($new_row)) {
-            $result[] = $new_row;
-        }
-
-        $this->progress_bar->advance();
     }
 
     /**
