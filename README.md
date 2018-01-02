@@ -27,7 +27,7 @@ To enable the service provider in versions prior to Laravel 5.4, edit the config
 ```php
     'providers' => [
         ...
-        Bluora\LaravelDatasets\ServiceProvider::class,
+        HnhDigital\Datasets\ServiceProvider::class,
         ...
     ];
 ```
