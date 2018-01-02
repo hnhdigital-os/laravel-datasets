@@ -2,9 +2,9 @@
 
 namespace HnhDigital\Datasets\Commands;
 
+use GuzzleHttp\Client as GuzzleClient;
 use HnhDigital\Datasets\Models\ImportModel;
 use HnhDigital\Datasets\Traits\CommandTrait;
-use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
 
