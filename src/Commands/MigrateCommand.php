@@ -165,7 +165,7 @@ class MigrateCommand extends Command
         $class_name = preg_replace('/.*\\\\/', '', $class);
 
         // Generate contents for database file.
-        $contents = sprintf("<?php\n\nuse %s;\n\nclass %s extends %s\n{\n\tprotected $connection = '%s';\n\n}\n", $class, $alias_class, $class_name, $connection);
+        $contents = sprintf("<?php\n\nuse %s as SourceTable;\n\nclass %s extends SourceTable\n{\n\tprotected $connection = '%s';\n\n}\n", $class, $class_name, $connection);
 
         // Add the migration to the tracking table.
         file_put_contents($alias_file, $contents);
