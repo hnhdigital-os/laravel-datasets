@@ -24,13 +24,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Bluora\\LaravelDatasets\\": "src/"
+            "HnhDigital\\Datasets\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Bluora\\LaravelDatasets\\ServiceProvider"
+                "HnhDigital\\Datasets\\ServiceProvider"
             ]
         }
     }

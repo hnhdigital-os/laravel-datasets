@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluora\LaravelDatasets;
+namespace HnhDigital\Datasets;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 

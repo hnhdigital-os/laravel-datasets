@@ -1,9 +1,9 @@
 <?php
 
-namespace Bluora\LaravelDatasets\Commands;
+namespace HnhDigital\Datasets\Commands;
 
-use Bluora\LaravelDatasets\Models\ImportModel;
-use Bluora\LaravelDatasets\Traits\CommandTrait;
+use HnhDigital\Datasets\Models\ImportModel;
+use HnhDigital\Datasets\Traits\CommandTrait;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Console\Command;
 use League\Csv\Reader;

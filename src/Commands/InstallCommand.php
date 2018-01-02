@@ -1,8 +1,8 @@
 <?php
 
-namespace Bluora\LaravelDatasets\Commands;
+namespace HnhDigital\Datasets\Commands;
 
-use Bluora\LaravelDatasets\Traits\CommandTrait;
+use HnhDigital\Datasets\Traits\CommandTrait;
 use DB;
 use Illuminate\Console\Command;
 

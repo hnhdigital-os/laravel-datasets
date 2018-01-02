@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluora\LaravelDatasets\Traits;
+namespace HnhDigital\Datasets\Traits;
 
 use DB;
 
