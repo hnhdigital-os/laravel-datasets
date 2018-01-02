@@ -2,8 +2,8 @@
 
 namespace HnhDigital\Datasets\Commands;
 
-use HnhDigital\Datasets\Traits\CommandTrait;
 use DB;
+use HnhDigital\Datasets\Traits\CommandTrait;
 use Illuminate\Console\Command;
 
 class InstallCommand extends Command
