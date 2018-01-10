@@ -282,16 +282,21 @@ class SyncCommand extends Command
         $query->setConnection($this->connection($this->argument('dataset')));
         $query->setTable(sprintf('data_%s', array_get($this->config, 'table')));
 
+        $count_keys = 0;
+
         foreach (array_get($this->config, 'import_keys', []) as $key) {
-            $query->where($key, array_get($row, $key, null));
+            if (!is_null($value = array_get($row, $key, null))) {
+                $query = $query->where($key, $value);
+                $count_keys++;
+            }
         }
 
-        $model = $query->first();
-        $new_model = false;
+        if ($count_keys > 0) {
+            $model = $query->first();
+        }
 
         if (is_null($model)) {
             $model = new ImportModel();
-            $new_model = true;
         }
 
         // Ensure connection and table are set.
